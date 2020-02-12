@@ -4,13 +4,13 @@ package com.example.weatherapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.weatherapp.PokoWeatherData
 import com.example.weatherapp.model.Network
+import com.example.weatherapp.model.PokoWeatherData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MoviesViewModel : ViewModel(){
+class WeatherViewModel : ViewModel(){
 
     private val dataSet =
         MutableLiveData<List<PokoWeatherData>>()
@@ -19,7 +19,7 @@ class MoviesViewModel : ViewModel(){
         return dataSet
     }
 
-    fun getMovies(){
+    fun getWeather(){
 
         //val network = Network("https://api.androidhive.info/json/movies.json") example from previous project
         //TODO enter correct weather api url
