@@ -2,6 +2,7 @@ package com.example.weatherapp.model
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 interface RetrofitEndpoint {
@@ -22,7 +23,11 @@ interface RetrofitEndpoint {
     //@GET("????")
     //fun getWeather(): Observable<List<PokoWeatherData>>
 
-    @GET("????")
-    fun getWeather(): Call<List<PokoWeatherData>>
+
+    @GET("forecast")
+    fun getWeather(@Query("zip")zipcode:String,
+                   @Query("appid")apiKeyValue:String): Call<List<PokoWeatherData>>
+    
+    //Network.initretrofit.getweather(tvZipValue.text, resources.getString(r.string.apikey)).enqueue
 
 }

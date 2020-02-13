@@ -30,7 +30,7 @@ class WeatherViewModel : ViewModel(){
         //TODO: append cityID and api key
         val network = Network(apiUrl+apiCity+apiKey)
 
-        network.initRetrofit().getWeather().enqueue(object : Callback<List<PokoWeatherData>>{
+        network.initRetrofit().getWeather(apiUrl, apiKey).enqueue(object : Callback<List<PokoWeatherData>>{
             override fun onFailure(call: Call<List<PokoWeatherData>>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 println("failure")
