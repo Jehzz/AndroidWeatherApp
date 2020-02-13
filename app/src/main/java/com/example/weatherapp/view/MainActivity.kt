@@ -26,24 +26,20 @@ class MainActivity : AppCompatActivity() {
             }
         ).get(WeatherViewModel::class.java)
 
-        //weatherViewModel.getWeather()
 
         weatherViewModel.getWeatherData()
             .observe(this,
                 object : Observer<List<PokoWeatherData>> {
                     override fun onChanged(t: List<PokoWeatherData>?) {
-                        recycler_view.layoutManager = LinearLayoutManager(this@MainActivity,
+                        rv_forecast_weather.layoutManager = LinearLayoutManager(this@MainActivity,
                             LinearLayoutManager.HORIZONTAL,
                             false)
-                        recycler_view.adapter = CustomAdapter(t!!)
+                        rv_forecast_weather.adapter = CustomAdapter(t!!)
 
                         // Start the recycler view on the 5th movie
-                        recycler_view.scrollToPosition(4)
+                        rv_forecast_weather.scrollToPosition(4)
                     }
                 })
-
-
-
         weatherViewModel.getWeather()
 
 

@@ -1,26 +1,26 @@
 package com.example.weatherapp.model
 
 data class PokoWeatherData (
-    val list: List<weatherlist>
+    var list: List<weatherlist>
 )
 
 data class weatherlist(
-    val main: main,
-    val weather: weather
+    var main: main,
+    var weather: weather
 )
 
 data class main(
-    val temp: String,
-    val temp_min: String,
-    val temp_max: String
+    var temp: String,
+    var temp_min: String,
+    var temp_max: String
 )
 
 data class weather(
-    val day: List<Day>
+    var day: List<Day>
 )
 
 data class Day(
-    val main: String,
-    val description: String,
-    val icon: String
+    var main: String,
+    var description: String,
+    var icon: String
 )

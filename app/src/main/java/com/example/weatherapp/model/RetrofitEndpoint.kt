@@ -7,9 +7,8 @@ import retrofit2.http.Query
 
 interface RetrofitEndpoint {
 
-
-     @GET("forecast")
+    @GET("forecast")
     fun getWeather(@Query("zip")zipCode:String,
-                   @Query("appid")apiKeyValue:String): Call<List<PokoWeatherData>>
+                   @Query("appid")apiKey:String): Call<List<PokoWeatherData>>
 
 }

@@ -29,4 +29,13 @@
         app:layout_constraintStart_toStartOf="@+id/et_zip"
         app:layout_constraintTop_toBottomOf="@+id/et_zip"
         tools:text="units input" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="34dp"
+        android:text="Save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_units" />
 </androidx.constraintlayout.widget.ConstraintLayout>
