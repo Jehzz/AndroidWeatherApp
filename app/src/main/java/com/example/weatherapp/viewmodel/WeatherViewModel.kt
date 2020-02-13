@@ -10,9 +10,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-//TODO: add cityID parameter to constructor, then append to apiURL?
 class WeatherViewModel : ViewModel(){
-
 
     private val dataSet =
         MutableLiveData<List<PokoWeatherData>>()
@@ -22,29 +20,37 @@ class WeatherViewModel : ViewModel(){
     }
 
     fun getWeather(){
-        val apiUrl: String = "api.openweathermap.org/data/2.5/forecast?"
-        val apiCity: String = "id=Atlanta"
+
+
+        //test values
+        val fullSampleUrl: String = "https://samples.openweathermap.org/data/2.5/forecast?id=524901&appid=b6907d289e10d714a6e88b30761fae22"
+
+        //tested, valid api call with my key
+        val testUrl: String = "https://api.openweathermap.org/data/2.5/forecast?id=524901&appid=ca3efb1692ca390683b47b41ade98581"
+
+
+        val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
         val apiZip: String = "zip=30339,us"
-        val apiKey: String = "&appid=ca3efb1692ca390683b47b41ade98581"
+        val apiKey: String = "appid=ca3efb1692ca390683b47b41ade98581"
+        val zip: String = "30339,us"
+        val key: String = "ca3efb1692ca390683b47b41ade98581"
 
-        //TODO: append cityID and api key
-        val network = Network(apiUrl+apiCity+apiKey)
 
-        network.initRetrofit().getWeather(apiUrl, apiKey).enqueue(object : Callback<List<PokoWeatherData>>{
+        val network = Network(baseApiUrl)
+        network.initRetrofit().getWeather(zip, key).enqueue(object : Callback<List<PokoWeatherData>>{
+
             override fun onFailure(call: Call<List<PokoWeatherData>>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                //todo: proper failure dialogue
                 println("failure")
             }
 
             override fun onResponse(
-
                 call: Call<List<PokoWeatherData>>,
                 response: Response<List<PokoWeatherData>>) {
                 dataSet.value = response.body()
                 println("success")
                 println(dataSet)
             }
-
         })
     }
 }

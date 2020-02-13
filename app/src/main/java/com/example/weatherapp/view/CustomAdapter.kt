@@ -4,6 +4,8 @@ package com.example.weatherapp.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.model.PokoWeatherData
@@ -21,7 +23,6 @@ class CustomAdapter(val dataSet : List<PokoWeatherData>) :
                 )
         )
 
-
     override fun getItemCount(): Int = dataSet.size
 
 
@@ -30,10 +31,12 @@ class CustomAdapter(val dataSet : List<PokoWeatherData>) :
     }
 
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        //findviewsbyid
+        val tvTime: TextView = itemView.findViewById(R.id.tv_time)
+        val tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
+        val ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
         fun onBind(data : PokoWeatherData){
-            //set data
+            tvTemp.text = data.list[0].main.temp
         }
     }
 }

@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
             }
         ).get(WeatherViewModel::class.java)
 
+        //weatherViewModel.getWeather()
+
         weatherViewModel.getWeatherData()
             .observe(this,
                 object : Observer<List<PokoWeatherData>> {
@@ -39,6 +41,8 @@ class MainActivity : AppCompatActivity() {
                         recycler_view.scrollToPosition(4)
                     }
                 })
+
+
 
         weatherViewModel.getWeather()
 

@@ -1,6 +1,10 @@
 package com.example.weatherapp.model
 
 data class PokoWeatherData (
+    val list: List<weatherlist>
+)
+
+data class weatherlist(
     val main: main,
     val weather: weather
 )
@@ -12,7 +16,7 @@ data class main(
 )
 
 data class weather(
-    val day: Day
+    val day: List<Day>
 )
 
 data class Day(
