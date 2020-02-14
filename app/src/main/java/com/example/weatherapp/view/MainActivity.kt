@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
     private val userZip: String = ""
     private val prefferedUnits: String = ""
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +39,8 @@ class MainActivity : AppCompatActivity() {
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
+            //Get weather data here
+            tv_current_temp.text = t.list[0].main.temp
             rv_forecast_weather.adapter = CustomAdapter(t!!)
         }
         )

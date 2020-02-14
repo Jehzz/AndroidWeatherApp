@@ -27,7 +27,7 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
 
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.onBind(dataSet)
+        holder.onBind(dataSet, position)
     }
 
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
@@ -35,9 +35,15 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
         val tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
         val ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
-        fun onBind(data : PokoWeatherData){
-            tvTime.text = data.list[0].dt_txt       //trim time
-            tvTemp.text = data.list[0].main.temp
+
+        fun onBind(data: PokoWeatherData, position: Int) {
+            //pass data to weather_item_layout views
+            tvTime.text = data.list[position].dt_txt       //todo: trim time
+            tvTemp.text = data.list[position].main.temp
+            var iconString = data.list[position].weather[0].icon
+
+            //todo: sorting function to find max and min temps
+            //ivWeatherIcon  =
         }
     }
 }
