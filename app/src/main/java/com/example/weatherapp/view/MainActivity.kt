@@ -13,6 +13,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val userZip: String = ""
+    private val prefferedUnits: String = ""
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,16 +33,13 @@ class MainActivity : AppCompatActivity() {
 
         weatherViewModel.getWeatherData()
             .observe(this,
-                object : Observer<List<PokoWeatherData>> {
-                    override fun onChanged(t: List<PokoWeatherData>?) {
-                        rv_forecast_weather.layoutManager = LinearLayoutManager(this@MainActivity,
-                            LinearLayoutManager.HORIZONTAL,
-                            false)
-                        rv_forecast_weather.adapter = CustomAdapter(t!!)
-
-                        // Start the recycler view on the 5th movie
-                        rv_forecast_weather.scrollToPosition(4)
-                    }
+                Observer<List<PokoWeatherData>> { t ->
+                    rv_forecast_weather.layoutManager = LinearLayoutManager(
+                        this@MainActivity,
+                        LinearLayoutManager.HORIZONTAL,
+                        false
+                    )
+                    rv_forecast_weather.adapter = CustomAdapter(t!!)
                 })
         weatherViewModel.getWeather()
 

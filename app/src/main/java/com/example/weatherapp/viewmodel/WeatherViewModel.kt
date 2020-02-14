@@ -29,7 +29,7 @@ class WeatherViewModel : ViewModel(){
         val testUrl: String = "https://api.openweathermap.org/data/2.5/forecast?id=524901&appid=ca3efb1692ca390683b47b41ade98581"
 
 
-        val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/forecast"
+        val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
         val apiZip: String = "zip=30339,us"
         val apiKey: String = "appid=ca3efb1692ca390683b47b41ade98581"
         val zip: String = "30339,us"
@@ -42,9 +42,9 @@ class WeatherViewModel : ViewModel(){
             override fun onFailure(call: Call<List<PokoWeatherData>>, t: Throwable) {
                 println("failure")
 
+                /*
                 //create fake forecast entry
                 var fakeForecast: PokoWeatherData = PokoWeatherData(
-
 
                 )
                 //set info
@@ -59,6 +59,8 @@ class WeatherViewModel : ViewModel(){
                 var fakeWeatherList: MutableList<PokoWeatherData> = mutableListOf()
                 fakeWeatherList.add(fakeForecast)
                 dataSet.value = fakeWeatherList
+
+                 */
             }
 
             override fun onResponse(
