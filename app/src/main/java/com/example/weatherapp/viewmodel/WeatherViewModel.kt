@@ -37,16 +37,19 @@ class WeatherViewModel : ViewModel(){
 
 
         val network = Network(baseApiUrl)
-        network.initRetrofit().getWeather(apiZip, apiKey)
+        network.initRetrofit().getWeather(zip, key)
             .enqueue(object : Callback<PokoWeatherData> {
                 override fun onResponse(
                     call: Call<PokoWeatherData>,
                     response: Response<PokoWeatherData>
                 ) {
+                    println("success")
+                    println(response.body().toString())
                     dataSet.value = response.body()
                 }
 
                 override fun onFailure(call: Call<PokoWeatherData>, t: Throwable) {
+                    t.printStackTrace()
                 println("failure")
             }
         })
