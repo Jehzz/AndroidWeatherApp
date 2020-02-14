@@ -6,7 +6,7 @@ data class PokoWeatherData(
 
 data class weatherlist(
     var main: main,
-    var weather: weather
+    var weather: List<weather>
 )
 
 data class main(

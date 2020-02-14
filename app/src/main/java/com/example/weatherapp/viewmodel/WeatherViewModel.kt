@@ -21,17 +21,7 @@ class WeatherViewModel : ViewModel(){
 
     fun getWeather(){
 
-
-        //test values
-        val fullSampleUrl: String = "https://samples.openweathermap.org/data/2.5/forecast?id=524901&appid=b6907d289e10d714a6e88b30761fae22"
-
-        //tested, valid api call with my key
-        val testUrl: String = "https://api.openweathermap.org/data/2.5/forecast?id=524901&appid=ca3efb1692ca390683b47b41ade98581"
-
-
         val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-        val apiZip: String = "zip=30339,us"
-        val apiKey: String = "appid=ca3efb1692ca390683b47b41ade98581"
         val zip: String = "30339,us"
         val key: String = "ca3efb1692ca390683b47b41ade98581"
 
@@ -44,14 +34,14 @@ class WeatherViewModel : ViewModel(){
                     response: Response<PokoWeatherData>
                 ) {
                     println("success")
-                    println(response.body().toString())
+                    //println(response.body().toString())
                     dataSet.value = response.body()
                 }
 
                 override fun onFailure(call: Call<PokoWeatherData>, t: Throwable) {
+                    println("failure")
                     t.printStackTrace()
-                println("failure")
-            }
+                }
         })
     }
 }
