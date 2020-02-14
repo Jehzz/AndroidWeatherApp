@@ -36,7 +36,7 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
         val ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
         fun onBind(data : PokoWeatherData){
-            //get position?
+            tvTime.text = data.list[0].dt_txt       //trim time
             tvTemp.text = data.list[0].main.temp
         }
     }

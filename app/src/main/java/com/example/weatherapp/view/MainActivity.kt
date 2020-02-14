@@ -21,28 +21,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val weatherViewModel = ViewModelProvider(
-            this,
-            object : ViewModelProvider.Factory{
-                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                    return WeatherViewModel() as T
-                }
+        //todo: Add check for zip-code and preferred units. Launch settings activity if not found
+
+        //Create the weather viewmodel
+        val weatherViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return WeatherViewModel() as T
             }
-        ).get(WeatherViewModel::class.java)
+        }).get(WeatherViewModel::class.java)
 
-
-        weatherViewModel.getWeatherData()
-            .observe(this,
-                Observer<PokoWeatherData> { t ->
-                    rv_forecast_weather.layoutManager = LinearLayoutManager(
-                        this@MainActivity,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    rv_forecast_weather.adapter = CustomAdapter(t!!)
-                })
+        //Fetch the weather data via Retrofit through the viewmodel
         weatherViewModel.getWeather()
 
-
+        //Observe the weather dataset, pass to recyclerview adapter
+        weatherViewModel.getWeatherData().observe(this, Observer<PokoWeatherData> { t ->
+            rv_forecast_weather.layoutManager = LinearLayoutManager(
+                this@MainActivity,
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+            rv_forecast_weather.adapter = CustomAdapter(t!!)
+        }
+        )
     }
 }

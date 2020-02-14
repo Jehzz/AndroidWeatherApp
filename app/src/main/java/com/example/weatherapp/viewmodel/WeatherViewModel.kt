@@ -34,7 +34,7 @@ class WeatherViewModel : ViewModel(){
                     response: Response<PokoWeatherData>
                 ) {
                     println("success")
-                    //println(response.body().toString())
+                    println(response.body().toString())
                     dataSet.value = response.body()
                 }
 

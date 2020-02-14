@@ -14,6 +14,7 @@ class SettingsActivity : AppCompatActivity() {
     private val preferredUnits: String = ""
 
 
+    //Save inputs to shared preferences
     private fun saveInputs() {
         val sharedPreferences = getSharedPreferences(userZip, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -28,10 +29,12 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        //Listen for Save button, save zip and unit to sharedpreferences
+        //Save Button listener
         val btnSave: Button = findViewById(R.id.btn_save)
         btnSave.setOnClickListener {
-            saveInputs()
+            saveInputs()                                //save data
+            //val returnIntent: Intent = Intent(PARAMS) //return to main activity
+            //start intent
         }
     }
 }
