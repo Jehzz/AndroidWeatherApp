@@ -38,7 +38,7 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
 
         fun onBind(data: PokoWeatherData, position: Int) {
             //pass data to weather_item_layout views
-            tvTime.text = data.list[position].dt_txt       //todo: trim time
+            tvTime.text = data.list[position].dt_txt       //todo: trim time string to hours
             tvTemp.text = data.list[position].main.temp
             var iconString = data.list[position].weather[0].icon
 

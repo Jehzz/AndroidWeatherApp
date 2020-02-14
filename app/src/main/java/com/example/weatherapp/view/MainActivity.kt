@@ -34,14 +34,14 @@ class MainActivity : AppCompatActivity() {
 
         //Observe the weather dataset, pass to recyclerview adapter
         weatherViewModel.getWeatherData().observe(this, Observer<PokoWeatherData> { t ->
-            rv_forecast_weather.layoutManager = LinearLayoutManager(
+            rv_todays_weather.layoutManager = LinearLayoutManager(
                 this@MainActivity,
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
-            //Get weather data here
+            //Get and assign weather data to views here!
             tv_current_temp.text = t.list[0].main.temp
-            rv_forecast_weather.adapter = CustomAdapter(t!!)
+            rv_todays_weather.adapter = CustomAdapter(t!!)
         }
         )
     }
