@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         weatherViewModel.getWeatherData()
             .observe(this,
-                Observer<List<PokoWeatherData>> { t ->
+                Observer<PokoWeatherData> { t ->
                     rv_forecast_weather.layoutManager = LinearLayoutManager(
                         this@MainActivity,
                         LinearLayoutManager.HORIZONTAL,

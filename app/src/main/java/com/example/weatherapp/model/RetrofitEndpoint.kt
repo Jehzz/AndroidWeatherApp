@@ -11,6 +11,6 @@ interface RetrofitEndpoint {
     fun getWeather(
         @Query("zip") zipCode: String,
         @Query("appid") apiKey: String
-    ): Call<List<PokoWeatherData>>
+    ): Call<PokoWeatherData>
 
 }

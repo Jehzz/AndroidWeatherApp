@@ -13,9 +13,9 @@ import retrofit2.Response
 class WeatherViewModel : ViewModel(){
 
     private val dataSet =
-        MutableLiveData<List<PokoWeatherData>>()
+        MutableLiveData<PokoWeatherData>()
 
-    fun getWeatherData(): LiveData<List<PokoWeatherData>> {
+    fun getWeatherData(): LiveData<PokoWeatherData> {
         return dataSet
     }
 
@@ -37,38 +37,17 @@ class WeatherViewModel : ViewModel(){
 
 
         val network = Network(baseApiUrl)
-        network.initRetrofit().getWeather(apiZip, apiKey).enqueue(object : Callback<List<PokoWeatherData>>{
+        network.initRetrofit().getWeather(apiZip, apiKey)
+            .enqueue(object : Callback<PokoWeatherData> {
+                override fun onResponse(
+                    call: Call<PokoWeatherData>,
+                    response: Response<PokoWeatherData>
+                ) {
+                    dataSet.value = response.body()
+                }
 
-            override fun onFailure(call: Call<List<PokoWeatherData>>, t: Throwable) {
+                override fun onFailure(call: Call<PokoWeatherData>, t: Throwable) {
                 println("failure")
-
-                /*
-                //create fake forecast entry
-                var fakeForecast: PokoWeatherData = PokoWeatherData(
-
-                )
-                //set info
-                fakeForecast.list[0].main.temp = "20"
-                fakeForecast.list[0].main.temp_max = "30"
-                fakeForecast.list[0].main.temp_min = "10"
-                fakeForecast.list[0].weather.day.get(0).main = "Clouds"
-                fakeForecast.list[0].weather.day.get(0).description = "broken clouds"
-                fakeForecast.list[0].weather.day.get(0).icon = "04n"
-
-                //add fake forecast entry
-                var fakeWeatherList: MutableList<PokoWeatherData> = mutableListOf()
-                fakeWeatherList.add(fakeForecast)
-                dataSet.value = fakeWeatherList
-
-                 */
-            }
-
-            override fun onResponse(
-                call: Call<List<PokoWeatherData>>,
-                response: Response<List<PokoWeatherData>>) {
-                dataSet.value = response.body()
-                println("success")
-                println(dataSet)
             }
         })
     }

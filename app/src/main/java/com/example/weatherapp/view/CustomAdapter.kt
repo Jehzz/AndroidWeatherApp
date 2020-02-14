@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.model.PokoWeatherData
 
-class CustomAdapter(val dataSet : List<PokoWeatherData>) :
+class CustomAdapter(val dataSet: PokoWeatherData) :
     RecyclerView.Adapter<CustomAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
@@ -23,11 +23,11 @@ class CustomAdapter(val dataSet : List<PokoWeatherData>) :
                 )
         )
 
-    override fun getItemCount(): Int = dataSet.size
+    override fun getItemCount(): Int = dataSet.list.size
 
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
-        holder.onBind(dataSet[position])
+        holder.onBind(dataSet)
     }
 
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
