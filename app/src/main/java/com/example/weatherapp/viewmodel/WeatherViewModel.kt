@@ -12,20 +12,26 @@ import retrofit2.Response
 
 class WeatherViewModel : ViewModel(){
 
-    private val dataSet =
-        MutableLiveData<PokoWeatherData>()
+    private val currentWeatherDataSet = MutableLiveData<PokoWeatherData>()
 
-    fun getWeatherData(): LiveData<PokoWeatherData> {
-        return dataSet
+    fun getCurrentWeatherData(): LiveData<PokoWeatherData> {
+        return currentWeatherDataSet
     }
 
-    fun getWeather(zip: String, units: String) {
+    private val forecastWeatherDataSet = MutableLiveData<PokoWeatherData>()
+
+    fun getForecastWeatherData(): LiveData<PokoWeatherData> {
+        return forecastWeatherDataSet
+    }
+
+
+    fun getCurrentWeather(zip: String, units: String) {
 
         val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
         val key: String = "ca3efb1692ca390683b47b41ade98581"
 
         val network = Network(baseApiUrl)
-        network.initRetrofit().getWeather(zip, key, units)
+        network.initRetrofit().getCurrentWeather(zip, key, units)
             .enqueue(object : Callback<PokoWeatherData> {
                 override fun onResponse(
                     call: Call<PokoWeatherData>,
@@ -33,7 +39,32 @@ class WeatherViewModel : ViewModel(){
                 ) {
                     println("success")
                     println(response.body().toString())
-                    dataSet.value = response.body()
+                    currentWeatherDataSet.value = response.body()
+                }
+
+                override fun onFailure(call: Call<PokoWeatherData>, t: Throwable) {
+                    println("failure")
+                    t.printStackTrace()
+                }
+            })
+    }
+
+
+    fun getForecastWeather(zip: String, units: String) {
+
+        val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
+        val key: String = "ca3efb1692ca390683b47b41ade98581"
+
+        val network = Network(baseApiUrl)
+        network.initRetrofit().getForecastWeather(zip, key, units)
+            .enqueue(object : Callback<PokoWeatherData> {
+                override fun onResponse(
+                    call: Call<PokoWeatherData>,
+                    response: Response<PokoWeatherData>
+                ) {
+                    println("success")
+                    println(response.body().toString())
+                    forecastWeatherDataSet.value = response.body()
                 }
 
                 override fun onFailure(call: Call<PokoWeatherData>, t: Throwable) {

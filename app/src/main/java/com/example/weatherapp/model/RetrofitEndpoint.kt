@@ -8,7 +8,14 @@ import retrofit2.http.Query
 interface RetrofitEndpoint {
 
     @GET("forecast")
-    fun getWeather(
+    fun getForecastWeather(
+        @Query("zip") zipCode: String,
+        @Query("appid") apiKey: String,
+        @Query("units") units: String
+    ): Call<PokoWeatherData>
+
+    @GET("weather")
+    fun getCurrentWeather(
         @Query("zip") zipCode: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
