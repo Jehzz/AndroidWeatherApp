@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -66,11 +67,30 @@ class MainActivity : AppCompatActivity() {
             weatherViewModel.getCurrentWeatherData()
                 .observe(this, Observer<PokoCurrentWeatherData> { t ->
 
-                    //Get and assign weather data to views here!
+                    //Get data and assign to views here
                     tv_city_name.text = t.name
+                    tv_description.text = t.weather[0].main
                     tv_current_temp.text = (t.main.temp) + "°"
-                }
-                )
+
+                    //Check temperature and assign warm or cool color values
+                    if ((t.main.temp.toFloat() < 60.0) && (preferredUnits.equals("imperial"))
+                        || ((t.main.temp.toFloat() < 15.6) && (preferredUnits.equals("metric")))
+                    ) {
+                        cv_today_weather.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                applicationContext,
+                                R.color.colorCool
+                            )
+                        )
+                    } else {
+                        cv_today_weather.setCardBackgroundColor(
+                            ContextCompat.getColor(
+                                applicationContext,
+                                R.color.colorWarm
+                            )
+                        )
+                    }
+                })
         } //end else
     }
 }

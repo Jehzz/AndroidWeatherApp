@@ -36,16 +36,12 @@ class CustomAdapter(val dataSet: PokoForecastWeatherData) :
         var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
         var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
-
         fun onBind(data: PokoForecastWeatherData, position: Int) {
             //pass data to weather_item_layout views
             tvTime.text = (data.list[position].dt_txt).substring(11, 16)
-            tvTemp.text = data.list[position].main.temp.substring(0, 4) + "°"
+            tvTemp.text = data.list[position].main.temp.substring(0, 2) + "°"
             var iconString = data.list[position].weather[0].icon
-
             //todo: sorting function to find max and min temps to assign correct icon
-
-            //Load icon
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .into(ivWeatherIcon)
         }

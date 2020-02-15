@@ -8,6 +8,7 @@ data class PokoCurrentWeatherData(
 
 data class weatherdata(
     var id: Int,
+    var main: String,
     var description: String,
     var icon: String
 )
