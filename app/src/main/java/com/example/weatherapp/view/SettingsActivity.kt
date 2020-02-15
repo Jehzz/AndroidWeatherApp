@@ -12,6 +12,23 @@ class SettingsActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "weather prefs"
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_settings)
+
+        //Save Button listener. Save data and return to MainActivity
+        val btnSave: Button = findViewById(R.id.btn_save)
+        btnSave.setOnClickListener {
+            //Check validity of zipcode
+            if (isValidZip(et_zip.text.toString())) {
+                saveInputs()
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                et_zip.error = "Enter a proper Zip Code"
+            }
+        }
+    }
+
     //Save inputs to shared preferences
     private fun saveInputs() {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -21,15 +38,9 @@ class SettingsActivity : AppCompatActivity() {
         editor.commit()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-
-        //Save Button listener. Save data and return to MainActivity
-        val btnSave: Button = findViewById(R.id.btn_save)
-        btnSave.setOnClickListener {
-            saveInputs()
-            startActivity(Intent(this, MainActivity::class.java))
-        }
+    //Check input
+    private fun isValidZip(text: String): Boolean {
+        var pattern = Regex("^[0-9]{5}")            //Zipcode pattern is 5 digits
+        return pattern.matches(text)                        //return true if input matches pattern
     }
 }

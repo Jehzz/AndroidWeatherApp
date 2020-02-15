@@ -63,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                 rv_todays_weather.adapter = CustomAdapter(t!!)
             }
             )
-            //Observe the current weather dataset, pass to recyclerview adapter
             weatherViewModel.getCurrentWeatherData()
                 .observe(this, Observer<PokoCurrentWeatherData> { t ->
 
