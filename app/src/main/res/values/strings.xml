@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Weather App</string>
     <string name="degreesicon">°</string>
+
+    <string-array name="spinner_options_array">
+        <item>Imperial</item>
+        <item>Metric</item>
+    </string-array>
+
 </resources>

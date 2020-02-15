@@ -20,24 +20,22 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="zip input" />
 
-    <EditText
-        android:id="@+id/et_units"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:ems="10"
-        android:hint="Units: Imperial or Celsius"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="@+id/et_zip"
-        app:layout_constraintTop_toBottomOf="@+id/et_zip"
-        tools:text="units input" />
-
     <Button
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="34dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_units" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_units" />
+
+    <Spinner
+        android:id="@+id/spinner_units"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/et_zip"
+        app:layout_constraintStart_toStartOf="@+id/et_zip"
+        app:layout_constraintTop_toBottomOf="@+id/et_zip" />
 </androidx.constraintlayout.widget.ConstraintLayout>

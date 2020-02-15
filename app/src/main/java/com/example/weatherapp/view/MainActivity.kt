@@ -72,8 +72,8 @@ class MainActivity : AppCompatActivity() {
                     tv_current_temp.text = (t.main.temp) + "°"
 
                     //Check temperature and assign warm or cool color values
-                    if ((t.main.temp.toFloat() < 60.0) && (preferredUnits.equals("imperial"))
-                        || ((t.main.temp.toFloat() < 15.6) && (preferredUnits.equals("metric")))
+                    if ((t.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
+                        || ((t.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))
                     ) {
                         cv_today_weather.setCardBackgroundColor(
                             ContextCompat.getColor(

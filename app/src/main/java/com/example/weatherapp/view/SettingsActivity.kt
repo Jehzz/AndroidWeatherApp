@@ -3,6 +3,7 @@ package com.example.weatherapp.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.R
@@ -27,6 +28,18 @@ class SettingsActivity : AppCompatActivity() {
                 et_zip.error = "Enter a proper Zip Code"
             }
         }
+
+        //Populate units spinner
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.spinner_options_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner
+            spinner_units.adapter = adapter
+        }
     }
 
     //Save inputs to shared preferences
@@ -34,7 +47,7 @@ class SettingsActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("userZip", et_zip.text.toString()).apply()
-        editor.putString("preferredUnits", et_units.text.toString()).apply()
+        editor.putString("preferredUnits", spinner_units.selectedItem.toString()).apply()
         editor.commit()
     }
 
