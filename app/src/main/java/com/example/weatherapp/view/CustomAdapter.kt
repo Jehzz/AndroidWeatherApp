@@ -44,7 +44,7 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
             var iconString = data.list[position].weather[0].icon
 
             //todo: sorting function to find max and min temps to assign correct icon
-            sk
+
             //Load icon
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .into(ivWeatherIcon)
