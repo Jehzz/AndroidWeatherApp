@@ -19,15 +19,13 @@ class WeatherViewModel : ViewModel(){
         return dataSet
     }
 
-    fun getWeather(){
+    fun getWeather(zip: String, units: String) {
 
         val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-        val zip: String = "30339,us"
         val key: String = "ca3efb1692ca390683b47b41ade98581"
 
-
         val network = Network(baseApiUrl)
-        network.initRetrofit().getWeather(zip, key, "imperial")
+        network.initRetrofit().getWeather(zip, key, units)
             .enqueue(object : Callback<PokoWeatherData> {
                 override fun onResponse(
                     call: Call<PokoWeatherData>,

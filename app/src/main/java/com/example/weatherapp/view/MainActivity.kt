@@ -32,31 +32,29 @@ class MainActivity : AppCompatActivity() {
         if (userZip.equals(null) || preferredUnits.equals(null)) {
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-        }
+        } else {//Create the weather viewmodel
+            val weatherViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
+                override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                    return WeatherViewModel() as T
+                }
+            }).get(WeatherViewModel::class.java)
 
+            //Fetch the weather data via Retrofit through the viewmodel
+            weatherViewModel.getWeather(userZip!!, preferredUnits!!)
 
-
-        //Create the weather viewmodel
-        val weatherViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {
-            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return WeatherViewModel() as T
+            //Observe the weather dataset, pass to recyclerview adapter
+            weatherViewModel.getWeatherData().observe(this, Observer<PokoWeatherData> { t ->
+                rv_todays_weather.layoutManager = LinearLayoutManager(
+                    this@MainActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                //Get and assign weather data to views here!
+                tv_current_temp.text = t.list[0].main.temp
+                rv_todays_weather.adapter = CustomAdapter(t!!)
             }
-        }).get(WeatherViewModel::class.java)
-
-        //Fetch the weather data via Retrofit through the viewmodel
-        weatherViewModel.getWeather()
-
-        //Observe the weather dataset, pass to recyclerview adapter
-        weatherViewModel.getWeatherData().observe(this, Observer<PokoWeatherData> { t ->
-            rv_todays_weather.layoutManager = LinearLayoutManager(
-                this@MainActivity,
-                LinearLayoutManager.HORIZONTAL,
-                false
             )
-            //Get and assign weather data to views here!
-            tv_current_temp.text = t.list[0].main.temp
-            rv_todays_weather.adapter = CustomAdapter(t!!)
+
         }
-        )
     }
 }

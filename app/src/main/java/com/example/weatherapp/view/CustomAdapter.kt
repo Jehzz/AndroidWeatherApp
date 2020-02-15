@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.model.PokoWeatherData
+import com.squareup.picasso.Picasso
 
 class CustomAdapter(val dataSet: PokoWeatherData) :
     RecyclerView.Adapter<CustomAdapter.CustomViewHolder>() {
@@ -31,9 +32,9 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
     }
 
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        val tvTime: TextView = itemView.findViewById(R.id.tv_time)
-        val tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
-        val ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
+        var tvTime: TextView = itemView.findViewById(R.id.tv_time)
+        var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
+        var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
 
         fun onBind(data: PokoWeatherData, position: Int) {
@@ -42,8 +43,11 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
             tvTemp.text = data.list[position].main.temp
             var iconString = data.list[position].weather[0].icon
 
-            //todo: sorting function to find max and min temps
-            //ivWeatherIcon  =
+            //todo: sorting function to find max and min temps to assign correct icon
+            sk
+            //Load icon
+            Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
+                .into(ivWeatherIcon)
         }
     }
 }
