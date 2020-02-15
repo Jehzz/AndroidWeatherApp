@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
             weatherViewModel.getCurrentWeather(userZip!!, preferredUnits!!)
             weatherViewModel.getForecastWeather(userZip!!, preferredUnits!!)
 
-            //Observe the forecastweather dataset, pass to recyclerview adapter
+            //Today's forecast recyclerview logic
             weatherViewModel.getForecastWeatherData()
                 .observe(this, Observer<PokoForecastWeatherData> { t ->
                     rv_todays_weather.layoutManager = GridLayoutManager(
@@ -63,6 +63,20 @@ class MainActivity : AppCompatActivity() {
                 rv_todays_weather.adapter = CustomAdapter(t!!)
             }
             )
+
+            //Future's Forecast Recyclerview logic
+            weatherViewModel.getForecastWeatherData()
+                .observe(this, Observer<PokoForecastWeatherData> { t ->
+                    rv_tomorrows_weather.layoutManager = GridLayoutManager(
+                        this@MainActivity,
+                        4
+                    )
+                    //Get and assign weather data to views here!
+                    rv_tomorrows_weather.adapter = ForecastAdapter(t!!)
+                }
+                )
+
+            //Current Weather card logic
             weatherViewModel.getCurrentWeatherData()
                 .observe(this, Observer<PokoCurrentWeatherData> { t ->
 
