@@ -29,6 +29,12 @@
             android:layout_gravity="right"
             android:text="Settings"
             tools:text="settings" />
+
+        <TextView
+            android:id="@+id/tv_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="city" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView

@@ -8,10 +8,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.PokoWeatherData
+import com.example.weatherapp.model.PokoForecastWeatherData
 import com.squareup.picasso.Picasso
 
-class CustomAdapter(val dataSet: PokoWeatherData) :
+class CustomAdapter(val dataSet: PokoForecastWeatherData) :
     RecyclerView.Adapter<CustomAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
@@ -37,10 +37,10 @@ class CustomAdapter(val dataSet: PokoWeatherData) :
         var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
 
-        fun onBind(data: PokoWeatherData, position: Int) {
+        fun onBind(data: PokoForecastWeatherData, position: Int) {
             //pass data to weather_item_layout views
             tvTime.text = (data.list[position].dt_txt).substring(11, 16)
-            tvTemp.text = data.list[position].main.temp
+            tvTemp.text = data.list[position].main.temp.substring(0, 4) + "°"
             var iconString = data.list[position].weather[0].icon
 
             //todo: sorting function to find max and min temps to assign correct icon

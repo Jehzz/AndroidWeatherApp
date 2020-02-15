@@ -12,13 +12,13 @@ interface RetrofitEndpoint {
         @Query("zip") zipCode: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Call<PokoWeatherData>
+    ): Call<PokoForecastWeatherData>
 
     @GET("weather")
     fun getCurrentWeather(
         @Query("zip") zipCode: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Call<PokoWeatherData>
+    ): Call<PokoCurrentWeatherData>
 
 }

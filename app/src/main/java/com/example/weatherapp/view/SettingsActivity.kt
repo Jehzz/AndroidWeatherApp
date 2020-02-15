@@ -21,18 +21,15 @@ class SettingsActivity : AppCompatActivity() {
         editor.commit()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        //Save Button listener
+        //Save Button listener. Save data and return to MainActivity
         val btnSave: Button = findViewById(R.id.btn_save)
         btnSave.setOnClickListener {
-            saveInputs()                                //save data
-            val returnIntent: Intent =
-                Intent(this, MainActivity::class.java) //return to main activity
-            startActivity(returnIntent)
+            saveInputs()
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 }

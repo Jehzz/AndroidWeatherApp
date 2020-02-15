@@ -8,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weatherapp.R
-import com.example.weatherapp.model.PokoWeatherData
+import com.example.weatherapp.model.PokoCurrentWeatherData
+import com.example.weatherapp.model.PokoForecastWeatherData
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(settingsIntent)
         })
 
-
         //Fetch zip and units from shared preferences
         val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         userZip = sharedPreferences.getString("userZip", null)
@@ -47,21 +47,30 @@ class MainActivity : AppCompatActivity() {
                 }
             }).get(WeatherViewModel::class.java)
 
-            //Fetch the weather data via Retrofit through the viewmodel
+            //Fetch the current and forecast weather data
+            weatherViewModel.getCurrentWeather(userZip!!, preferredUnits!!)
             weatherViewModel.getForecastWeather(userZip!!, preferredUnits!!)
 
-            //Observe the weather dataset, pass to recyclerview adapter
-            weatherViewModel.getForecastWeatherData().observe(this, Observer<PokoWeatherData> { t ->
-                rv_todays_weather.layoutManager = LinearLayoutManager(
+            //Observe the forecastweather dataset, pass to recyclerview adapter
+            weatherViewModel.getForecastWeatherData()
+                .observe(this, Observer<PokoForecastWeatherData> { t ->
+                    rv_todays_weather.layoutManager = GridLayoutManager(
                     this@MainActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
+                        4
                 )
                 //Get and assign weather data to views here!
-                tv_current_temp.text = t.list[0].main.temp
                 rv_todays_weather.adapter = CustomAdapter(t!!)
             }
             )
+            //Observe the current weather dataset, pass to recyclerview adapter
+            weatherViewModel.getCurrentWeatherData()
+                .observe(this, Observer<PokoCurrentWeatherData> { t ->
+
+                    //Get and assign weather data to views here!
+                    tv_city_name.text = t.name
+                    tv_current_temp.text = (t.main.temp) + "°"
+                }
+                )
         } //end else
     }
 }

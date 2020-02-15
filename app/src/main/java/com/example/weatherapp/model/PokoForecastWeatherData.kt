@@ -1,6 +1,6 @@
 package com.example.weatherapp.model
 
-data class PokoWeatherData(
+data class PokoForecastWeatherData(
     var list: List<weatherlist>
 )
 
