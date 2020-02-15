@@ -1,5 +1,7 @@
 package com.example.weatherapp.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -13,14 +15,26 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val userZip: String = ""
-    private val prefferedUnits: String = ""
+    private val PREFS_NAME = "weather prefs"
+    private var userZip: String? = null
+    private var preferredUnits: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //todo: Add check for zip-code and preferred units. Launch settings activity if not found
+        //Fetch zip and units from shared preferences
+        val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        userZip = sharedPreferences.getString("userZip", null)
+        preferredUnits = sharedPreferences.getString("preferredUnits", null)
+
+        //check for zip-code and preferred units. Launch settings activity if not found
+        if (userZip.equals(null) || preferredUnits.equals(null)) {
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
         //Create the weather viewmodel
         val weatherViewModel = ViewModelProvider(this, object : ViewModelProvider.Factory {

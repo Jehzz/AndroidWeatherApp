@@ -10,7 +10,8 @@ interface RetrofitEndpoint {
     @GET("forecast")
     fun getWeather(
         @Query("zip") zipCode: String,
-        @Query("appid") apiKey: String
+        @Query("appid") apiKey: String,
+        @Query("units") units: String
     ): Call<PokoWeatherData>
 
 }
