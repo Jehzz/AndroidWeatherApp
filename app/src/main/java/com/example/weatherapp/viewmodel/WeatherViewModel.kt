@@ -28,8 +28,8 @@ class WeatherViewModel : ViewModel(){
 
     fun getCurrentWeather(zip: String, units: String) {
 
-        val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-        val key: String = "ca3efb1692ca390683b47b41ade98581"
+        val baseApiUrl = "https://api.openweathermap.org/data/2.5/"
+        val key = "ca3efb1692ca390683b47b41ade98581"
 
         val network = Network(baseApiUrl)
         network.initRetrofit().getCurrentWeather(zip, key, units)
