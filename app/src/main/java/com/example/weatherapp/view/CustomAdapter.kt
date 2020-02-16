@@ -55,7 +55,7 @@ class CustomAdapter(val dataSet: PokoForecastWeatherData) :
                     lowIndex = i
                 }
             }
-            //assign color and icon based on high or low temp
+            //assign color based on high or low temp
             if (position == lowIndex) {
                 tvTemp.setTextColor(Color.parseColor("#03a9f4"))
                 tvTime.setTextColor(Color.parseColor("#03a9f4"))
@@ -63,6 +63,7 @@ class CustomAdapter(val dataSet: PokoForecastWeatherData) :
                 tvTemp.setTextColor(Color.parseColor("#ff9800"))
                 tvTime.setTextColor(Color.parseColor("#ff9800"))
             }
+            //TODO custom icons
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .into(ivWeatherIcon)
         }
