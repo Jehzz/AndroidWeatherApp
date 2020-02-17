@@ -12,6 +12,10 @@ import com.example.weatherapp.R
 import com.example.weatherapp.model.PokoForecastWeatherData
 import com.squareup.picasso.Picasso
 
+/**
+ * Class specific for returning only the next 24 hours of weather data to a recyclerview
+ * @author: Jess Osborn
+ */
 class CustomAdapter(val dataSet: PokoForecastWeatherData) :
     RecyclerView.Adapter<CustomAdapter.CustomViewHolder>() {
 
@@ -25,13 +29,21 @@ class CustomAdapter(val dataSet: PokoForecastWeatherData) :
                 )
         )
 
+    /**
+     * Limits the number of returned items from the dataset to just the next 24H of data
+     * @author: Jess Osborn
+     */
     override fun getItemCount(): Int = 8
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.onBind(dataSet, position)
-
     }
 
+    /**
+     * Binds data from the dataset to weather_item_layout views. Includes logic to color code
+     * daily high and low temperatures
+     * @author: Jess Osborn
+     */
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var tvTime: TextView = itemView.findViewById(R.id.tv_time)
         var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)

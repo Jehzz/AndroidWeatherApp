@@ -16,11 +16,16 @@ import com.example.weatherapp.model.PokoForecastWeatherData
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ * MainActivity is responsible for checking user input, and binding UI elements to the datasets
+ * @author: Jess Osborn
+ */
 class MainActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "weather prefs"
     private var userZip: String? = null
     private var preferredUnits: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,13 +61,13 @@ class MainActivity : AppCompatActivity() {
             weatherViewModel.getForecastWeatherData()
                 .observe(this, Observer<PokoForecastWeatherData> { t ->
                     rv_todays_weather.layoutManager = GridLayoutManager(
-                    this@MainActivity,
+                        this@MainActivity,
                         4
+                    )
+                    //Get and assign weather data to views here!
+                    rv_todays_weather.adapter = CustomAdapter(t!!)
+                }
                 )
-                //Get and assign weather data to views here!
-                rv_todays_weather.adapter = CustomAdapter(t!!)
-            }
-            )
 
             //Future's Forecast Recyclerview logic
             weatherViewModel.getForecastWeatherData()

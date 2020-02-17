@@ -11,6 +11,11 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+/**
+ * This class is responsible for creating the network connection, calling Retrofit, storing the
+ * returned data, and providing the information to the UI components
+ * @author: Jess Osborn
+ */
 class WeatherViewModel : ViewModel(){
 
     private val currentWeatherDataSet = MutableLiveData<PokoCurrentWeatherData>()
@@ -26,6 +31,10 @@ class WeatherViewModel : ViewModel(){
     }
 
 
+    /**
+     * Method for getting today's weather info
+     * @author: Jess Osborn
+     */
     fun getCurrentWeather(zip: String, units: String) {
 
         val baseApiUrl = "https://api.openweathermap.org/data/2.5/"
@@ -50,7 +59,10 @@ class WeatherViewModel : ViewModel(){
             })
     }
 
-
+    /**
+     * Method for getting future weather data
+     * @author: Jess Osborn
+     */
     fun getForecastWeather(zip: String, units: String) {
 
         val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
@@ -72,6 +84,6 @@ class WeatherViewModel : ViewModel(){
                     println("failure")
                     t.printStackTrace()
                 }
-        })
+            })
     }
 }

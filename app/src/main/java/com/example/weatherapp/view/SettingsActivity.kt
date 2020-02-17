@@ -9,6 +9,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.R
 import kotlinx.android.synthetic.main.activity_settings.*
 
+/**
+ * This activity takes the user's location as a zipcode, and their preferred units of measure.
+ * @author: Jess Osborn
+ */
 class SettingsActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "weather prefs"
@@ -40,7 +44,10 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    //Save inputs to shared preferences
+    /**
+     * Saves inputs to sharedPreferences
+     * @author: Jess Osborn
+     */
     private fun saveInputs() {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
@@ -49,7 +56,10 @@ class SettingsActivity : AppCompatActivity() {
         editor.commit()
     }
 
-    //Check input
+    /**
+     * Simple REGEX function to check the submitted zipcode format. Does not check if zipcode is real
+     * @author: Jess Osborn
+     */
     private fun isValidZip(text: String): Boolean {
         var pattern = Regex("^[0-9]{5}")            //Zipcode pattern is 5 digits
         return pattern.matches(text)                        //return true if input matches pattern

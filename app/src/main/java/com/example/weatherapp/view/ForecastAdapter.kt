@@ -25,6 +25,10 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
                 )
         )
 
+    /**
+     * Limits the returned data to only the end of tomorrow
+     * @author: Jess Osborn
+     */
     override fun getItemCount(): Int = 16
 
 
@@ -32,6 +36,11 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
         holder.onBind(dataSet, position)
     }
 
+    /**
+     * Binds data from the dataset to weather_item_layout views. Includes logic to color code
+     * daily high and low temperatures. +8 to position makes the first item the weather in 24hours from now
+     * @author: Jess Osborn
+     */
     class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvTime: TextView = itemView.findViewById(R.id.tv_time)
         var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)

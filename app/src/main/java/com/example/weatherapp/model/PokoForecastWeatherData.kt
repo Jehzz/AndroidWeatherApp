@@ -1,5 +1,9 @@
 package com.example.weatherapp.model
 
+/**
+ * Data class for holding the forecast information provided by openweather
+ * @author: Jess Osborn
+ */
 data class PokoForecastWeatherData(
     var list: List<weatherlist>
 )
