@@ -17,5 +17,4 @@ class NewClass : Application() {
         super.onCreate()
         myAppContext = baseContext
     }
-
 }

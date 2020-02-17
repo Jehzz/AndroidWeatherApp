@@ -64,16 +64,18 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
                     lowIndex = i
                 }
             }
-            //assign color and icon based on high or low temp
+
+            Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
+                .into(ivWeatherIcon)
             if (position == lowIndex) {
                 tvTemp.setTextColor(Color.parseColor("#03a9f4"))
                 tvTime.setTextColor(Color.parseColor("#03a9f4"))
+                ivWeatherIcon.setColorFilter(Color.parseColor("#03a9f4"))
             } else if (position == highIndex) {
                 tvTemp.setTextColor(Color.parseColor("#ff9800"))
                 tvTime.setTextColor(Color.parseColor("#ff9800"))
+                ivWeatherIcon.setColorFilter(Color.parseColor("#ff9800"))
             }
-            Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
-                .into(ivWeatherIcon)
         }
     }
 }
