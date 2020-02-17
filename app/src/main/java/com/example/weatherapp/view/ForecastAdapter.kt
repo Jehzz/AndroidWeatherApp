@@ -48,6 +48,7 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
 
         fun onBind(data: PokoForecastWeatherData, position: Int) {
             //pass data to weather_item_layout views
+            ivWeatherIcon.clearColorFilter()
             tvTime.text = (data.list[position + 8].dt_txt).substring(11, 16)
             tvTemp.text =
                 data.list[position + 8].main.temp + "°"   //substring method here risks index out of bounds. Use delimiter instead?
@@ -64,6 +65,7 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
                     lowIndex = i
                 }
             }
+
 
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .into(ivWeatherIcon)

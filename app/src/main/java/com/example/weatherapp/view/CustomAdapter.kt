@@ -51,6 +51,7 @@ class CustomAdapter(val dataSet: PokoForecastWeatherData) :
 
         fun onBind(data: PokoForecastWeatherData, position: Int) {
             //pass data to weather_item_layout views
+            ivWeatherIcon.clearColorFilter()
             tvTime.text = (data.list[position].dt_txt).substring(11, 16)
             tvTemp.text = data.list[position].main.temp + "°"
             var iconString = data.list[position].weather[0].icon
