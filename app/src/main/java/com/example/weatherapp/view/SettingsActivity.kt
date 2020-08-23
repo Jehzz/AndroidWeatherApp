@@ -20,11 +20,10 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+        //TODO: check for already saved ZIP to prevent user from having to re-input when only changing modes
 
-        //Save Button listener. Save data and return to MainActivity
         val btnSave: Button = findViewById(R.id.btn_save)
         btnSave.setOnClickListener {
-            //Check validity of zipcode
             if (isValidZip(et_zip.text.toString())) {
                 saveInputs()
                 startActivity(Intent(this, MainActivity::class.java))
@@ -33,7 +32,6 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        //Populate units spinner
         ArrayAdapter.createFromResource(
             this,
             R.array.spinner_options_array,

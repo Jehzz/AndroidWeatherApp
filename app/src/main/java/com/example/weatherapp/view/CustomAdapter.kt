@@ -9,14 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.PokoForecastWeatherData
+import com.example.weatherapp.model.data.ForecastWeatherData
 import com.squareup.picasso.Picasso
 
 /**
  * Class specific for returning only the next 24 hours of weather data to a recyclerview
  * @author: Jess Osborn
  */
-class CustomAdapter(val dataSet: PokoForecastWeatherData) :
+class CustomAdapter(private val dataSet: ForecastWeatherData) :
     RecyclerView.Adapter<CustomAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
@@ -49,7 +49,7 @@ class CustomAdapter(val dataSet: PokoForecastWeatherData) :
         var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
         var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
-        fun onBind(data: PokoForecastWeatherData, position: Int) {
+        fun onBind(data: ForecastWeatherData, position: Int) {
             //pass data to weather_item_layout views
             ivWeatherIcon.clearColorFilter()
             tvTime.text = (data.list[position].dt_txt).substring(11, 16)

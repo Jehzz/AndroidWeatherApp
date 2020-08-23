@@ -9,10 +9,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.PokoForecastWeatherData
+import com.example.weatherapp.model.data.ForecastWeatherData
 import com.squareup.picasso.Picasso
 
-class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
+class ForecastAdapter(private val dataSet: ForecastWeatherData) :
     RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
@@ -46,8 +46,7 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
         var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
         var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
-        fun onBind(data: PokoForecastWeatherData, position: Int) {
-            //pass data to weather_item_layout views
+        fun onBind(data: ForecastWeatherData, position: Int) {
             ivWeatherIcon.clearColorFilter()
             tvTime.text = (data.list[position + 8].dt_txt).substring(11, 16)
             tvTemp.text =
@@ -65,7 +64,6 @@ class ForecastAdapter(val dataSet: PokoForecastWeatherData) :
                     lowIndex = i
                 }
             }
-
 
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .into(ivWeatherIcon)

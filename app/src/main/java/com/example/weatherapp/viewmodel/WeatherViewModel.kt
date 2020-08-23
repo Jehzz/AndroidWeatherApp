@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.weatherapp.model.Network
-import com.example.weatherapp.model.PokoCurrentWeatherData
-import com.example.weatherapp.model.PokoForecastWeatherData
+import com.example.weatherapp.model.data.CurrentWeatherData
+import com.example.weatherapp.model.data.ForecastWeatherData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,15 +18,15 @@ import retrofit2.Response
  */
 class WeatherViewModel : ViewModel(){
 
-    private val currentWeatherDataSet = MutableLiveData<PokoCurrentWeatherData>()
+    private val currentWeatherDataSet = MutableLiveData<CurrentWeatherData>()
 
-    fun getCurrentWeatherData(): LiveData<PokoCurrentWeatherData> {
+    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> {
         return currentWeatherDataSet
     }
 
-    private val forecastWeatherDataSet = MutableLiveData<PokoForecastWeatherData>()
+    private val forecastWeatherDataSet = MutableLiveData<ForecastWeatherData>()
 
-    fun getForecastWeatherData(): LiveData<PokoForecastWeatherData> {
+    fun getForecastWeatherData(): LiveData<ForecastWeatherData> {
         return forecastWeatherDataSet
     }
 
@@ -42,17 +42,17 @@ class WeatherViewModel : ViewModel(){
 
         val network = Network(baseApiUrl)
         network.initRetrofit().getCurrentWeather(zip, key, units)
-            .enqueue(object : Callback<PokoCurrentWeatherData> {
+            .enqueue(object : Callback<CurrentWeatherData> {
                 override fun onResponse(
-                    call: Call<PokoCurrentWeatherData>,
-                    response: Response<PokoCurrentWeatherData>
+                    call: Call<CurrentWeatherData>,
+                    response: Response<CurrentWeatherData>
                 ) {
                     println("success")
                     println(response.body().toString())
                     currentWeatherDataSet.value = response.body()
                 }
 
-                override fun onFailure(call: Call<PokoCurrentWeatherData>, t: Throwable) {
+                override fun onFailure(call: Call<CurrentWeatherData>, t: Throwable) {
                     println("failure")
                     t.printStackTrace()
                 }
@@ -67,17 +67,17 @@ class WeatherViewModel : ViewModel(){
 
         val network = Network(baseApiUrl)
         network.initRetrofit().getForecastWeather(zip, key, units)
-            .enqueue(object : Callback<PokoForecastWeatherData> {
+            .enqueue(object : Callback<ForecastWeatherData> {
                 override fun onResponse(
-                    call: Call<PokoForecastWeatherData>,
-                    response: Response<PokoForecastWeatherData>
+                    call: Call<ForecastWeatherData>,
+                    response: Response<ForecastWeatherData>
                 ) {
                     println("success")
                     println(response.body().toString())
                     forecastWeatherDataSet.value = response.body()
                 }
 
-                override fun onFailure(call: Call<PokoForecastWeatherData>, t: Throwable) {
+                override fun onFailure(call: Call<ForecastWeatherData>, t: Throwable) {
                     println("failure")
                     t.printStackTrace()
                 }

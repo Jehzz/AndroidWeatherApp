@@ -1,5 +1,7 @@
 package com.example.weatherapp.model
 
+import com.example.weatherapp.model.data.CurrentWeatherData
+import com.example.weatherapp.model.data.ForecastWeatherData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -15,13 +17,13 @@ interface RetrofitEndpoint {
         @Query("zip") zipCode: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Call<PokoForecastWeatherData>
+    ): Call<ForecastWeatherData>
 
     @GET("weather")
     fun getCurrentWeather(
         @Query("zip") zipCode: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String
-    ): Call<PokoCurrentWeatherData>
+    ): Call<CurrentWeatherData>
 
 }

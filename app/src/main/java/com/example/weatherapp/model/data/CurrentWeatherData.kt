@@ -1,10 +1,10 @@
-package com.example.weatherapp.model
+package com.example.weatherapp.model.data
 
 /**
  * Data class for holding the current weather infomation provided by openweather
  * @author: Jess Osborn
  */
-data class PokoCurrentWeatherData(
+data class CurrentWeatherData(
     var name: String,
     var weather: List<weatherdata>,
     var main: main
