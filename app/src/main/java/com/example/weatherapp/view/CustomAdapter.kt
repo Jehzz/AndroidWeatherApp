@@ -70,6 +70,8 @@ class CustomAdapter(private val dataSet: ForecastWeatherData) :
             }
             //TODO custom icons
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
+                .resize(400, 400)
+                .centerCrop()
                 .into(ivWeatherIcon)
             //assign color based on high or low temp
             if (position == lowIndex) {

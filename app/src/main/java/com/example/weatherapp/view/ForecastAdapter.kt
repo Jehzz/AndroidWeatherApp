@@ -66,6 +66,8 @@ class ForecastAdapter(private val dataSet: ForecastWeatherData) :
             }
 
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
+                .resize(400, 400)
+                .centerCrop()
                 .into(ivWeatherIcon)
             if (position == lowIndex) {
                 tvTemp.setTextColor(Color.parseColor("#03a9f4"))

@@ -16,6 +16,7 @@
         android:ems="10"
         android:hint="Enter Zip-Code"
         android:inputType="textPersonName"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="zip input" />

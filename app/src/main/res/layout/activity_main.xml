@@ -15,6 +15,7 @@
             android:id="@+id/cv_today_weather"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:forceDarkAllowed="false"
             app:cardBackgroundColor="@color/cardview_dark_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -29,6 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +54,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display1"
                     android:textColor="@android:color/white"
+                    android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_current_temp"
@@ -63,8 +67,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal|center_vertical"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@android:color/white"
-                    android:textSize="30sp"
+                    android:textSize="36sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_city_name"
@@ -105,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="Todays Weather"
-                    android:textSize="18sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -131,8 +136,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
                     android:text="Tomorrows Weather"
-                    android:textSize="18sp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
