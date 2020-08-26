@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weatherapp.R
 import com.example.weatherapp.model.data.CurrentWeatherData
 import com.example.weatherapp.model.data.ForecastWeatherData
+import com.example.weatherapp.view.adapters.ForecastAdapter
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  * @author: Jess Osborn
  */
 class MainActivity : AppCompatActivity() {
+
+    private val TAG = "MainActivity"
 
     private val PREFS_NAME = "weather prefs"
     private var userZip: String? = null
@@ -53,11 +56,12 @@ class MainActivity : AppCompatActivity() {
     private fun createObservables() {
         weatherViewModel.getForecastWeatherData()
             .observe(this, Observer<ForecastWeatherData> { t ->
+
                 rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
-                rv_todays_weather.adapter = CustomAdapter(t!!)
+                rv_todays_weather.adapter = ForecastAdapter(t.list.take(8))
 
                 rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
-                rv_tomorrows_weather.adapter = ForecastAdapter(t)
+                rv_tomorrows_weather.adapter = ForecastAdapter(t.list.drop(8))
 
             })
 

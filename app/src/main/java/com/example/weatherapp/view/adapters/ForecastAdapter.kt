@@ -1,4 +1,4 @@
-package com.example.weatherapp.view
+package com.example.weatherapp.view.adapters
 
 
 import android.graphics.Color
@@ -9,10 +9,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.data.ForecastWeatherData
+import com.example.weatherapp.model.data.weatherlist
 import com.squareup.picasso.Picasso
 
-class ForecastAdapter(private val dataSet: ForecastWeatherData) :
+/**
+ * Class specific for translating today's weather data into a recyclerview
+ * @author: Jess Osborn
+ */
+class ForecastAdapter(private val dataSet: List<weatherlist>) :
     RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
@@ -25,12 +29,11 @@ class ForecastAdapter(private val dataSet: ForecastWeatherData) :
                 )
         )
 
-    /**
-     * Limits the returned data to only the end of tomorrow
+    /**z
+     * Limits the number of returned items from the dataset to just the next 24H of data
      * @author: Jess Osborn
      */
-    override fun getItemCount(): Int = 16
-
+    override fun getItemCount(): Int = 8
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.onBind(dataSet, position)
@@ -38,37 +41,39 @@ class ForecastAdapter(private val dataSet: ForecastWeatherData) :
 
     /**
      * Binds data from the dataset to weather_item_layout views. Includes logic to color code
-     * daily high and low temperatures. +8 to position makes the first item the weather in 24hours from now
+     * daily high and low temperatures
      * @author: Jess Osborn
      */
-    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
         var tvTime: TextView = itemView.findViewById(R.id.tv_time)
         var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
         var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
 
-        fun onBind(data: ForecastWeatherData, position: Int) {
+        fun onBind(data: List<weatherlist>, position: Int) {
+            //pass data to weather_item_layout views
             ivWeatherIcon.clearColorFilter()
-            tvTime.text = (data.list[position + 8].dt_txt).substring(11, 16)
-            tvTemp.text =
-                data.list[position + 8].main.temp + "°"   //substring method here risks index out of bounds. Use delimiter instead?
-            var iconString = data.list[position + 8].weather[0].icon
+            tvTime.text = (data[position].dt_txt).substring(11, 16)
+            tvTemp.text = data[position].main.temp + "°"
+            var iconString = data[position].weather[0].icon
+
 
             //Find high and low temps. This is called on each item, so grossly inefficient
             var lowIndex = 0
             var highIndex = 0
             for (i in 1..7) {
-                if (data.list[i].main.temp > data.list[highIndex].main.temp) {
+                if (data[i].main.temp > data[highIndex].main.temp) {
                     highIndex = i
                 }
-                if (data.list[i].main.temp < data.list[lowIndex].main.temp) {
+                if (data[i].main.temp < data[lowIndex].main.temp) {
                     lowIndex = i
                 }
             }
-
+            //TODO custom icons
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .resize(400, 400)
                 .centerCrop()
                 .into(ivWeatherIcon)
+            //assign color based on high or low temp
             if (position == lowIndex) {
                 tvTemp.setTextColor(Color.parseColor("#03a9f4"))
                 tvTime.setTextColor(Color.parseColor("#03a9f4"))
@@ -78,6 +83,7 @@ class ForecastAdapter(private val dataSet: ForecastWeatherData) :
                 tvTime.setTextColor(Color.parseColor("#ff9800"))
                 ivWeatherIcon.setColorFilter(Color.parseColor("#ff9800"))
             }
+
         }
     }
 }
