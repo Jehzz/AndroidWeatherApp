@@ -1,4 +1,4 @@
-package com.example.weatherapp.view.adapters
+package com.example.weatherapp.view
 
 
 import android.graphics.Color
@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.data.weatherlist
+import com.example.weatherapp.model.weatherlist
 import com.squareup.picasso.Picasso
 
 /**

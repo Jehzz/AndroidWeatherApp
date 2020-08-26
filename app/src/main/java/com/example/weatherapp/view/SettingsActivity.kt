@@ -3,8 +3,8 @@ package com.example.weatherapp.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.R
 import kotlinx.android.synthetic.main.activity_settings.*
@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.activity_settings.*
  */
 class SettingsActivity : AppCompatActivity() {
 
+    private val TAG = "SettingsActivity"
+
     private val PREFS_NAME = "weather prefs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,8 +24,8 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_settings)
 
         readUserPrefs()
-        val btnSave: Button = findViewById(R.id.btn_save)
-        btnSave.setOnClickListener {
+
+        btn_save.setOnClickListener {
             if (isValidZip(et_zip.text.toString())) {
                 saveInputs()
                 startActivity(Intent(this, MainActivity::class.java))
@@ -47,6 +49,7 @@ class SettingsActivity : AppCompatActivity() {
      * @author: Jess Osborn
      */
     private fun saveInputs() {
+        Log.d(TAG, "saveInputs: ")
         val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("userZip", et_zip.text.toString()).apply()
@@ -54,6 +57,10 @@ class SettingsActivity : AppCompatActivity() {
         editor.commit()
     }
 
+    /**
+     * Loads previously entered zipcode from sharedPreferences
+     * @author: Jess Osborn
+     */
     private fun readUserPrefs() {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         et_zip.setText(sharedPreferences.getString("userZip", null))

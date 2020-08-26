@@ -4,9 +4,9 @@ package com.example.weatherapp.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.weatherapp.model.CurrentWeatherData
+import com.example.weatherapp.model.ForecastWeatherData
 import com.example.weatherapp.model.Network
-import com.example.weatherapp.model.data.CurrentWeatherData
-import com.example.weatherapp.model.data.ForecastWeatherData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,20 +57,12 @@ class WeatherViewModel : ViewModel(){
                     t.printStackTrace()
                 }
             })
-    }
 
-    /**
-     * Method for getting future weather data
-     * @author: Jess Osborn
-     */
-    fun getForecastWeather(zip: String, units: String) {
-
-        val network = Network(baseApiUrl)
         network.initRetrofit().getForecastWeather(zip, key, units)
             .enqueue(object : Callback<ForecastWeatherData> {
                 override fun onResponse(
                     call: Call<ForecastWeatherData>,
-                    response: Response<ForecastWeatherData>
+                    response: Response<ForecastWeatherData>,
                 ) {
                     println("success")
                     println(response.body().toString())
@@ -83,4 +75,5 @@ class WeatherViewModel : ViewModel(){
                 }
             })
     }
+
 }
