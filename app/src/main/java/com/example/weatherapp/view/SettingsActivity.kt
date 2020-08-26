@@ -20,8 +20,8 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        //TODO: check for already saved ZIP to prevent user from having to re-input when only changing modes
 
+        readUserPrefs()
         val btnSave: Button = findViewById(R.id.btn_save)
         btnSave.setOnClickListener {
             if (isValidZip(et_zip.text.toString())) {
@@ -54,12 +54,17 @@ class SettingsActivity : AppCompatActivity() {
         editor.commit()
     }
 
+    private fun readUserPrefs() {
+        val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+        et_zip.setText(sharedPreferences.getString("userZip", null))
+    }
+
     /**
      * Simple REGEX function to check the submitted zipcode format. Does not check if zipcode is real
      * @author: Jess Osborn
      */
     private fun isValidZip(text: String): Boolean {
-        var pattern = Regex("^[0-9]{5}")            //Zipcode pattern is 5 digits
+        val pattern = Regex("^[0-9]{5}")            //Zipcode pattern is 5 digits
         return pattern.matches(text)                        //return true if input matches pattern
     }
 }
