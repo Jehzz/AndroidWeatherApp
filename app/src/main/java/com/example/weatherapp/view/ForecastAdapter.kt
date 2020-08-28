@@ -5,12 +5,11 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
 import com.example.weatherapp.model.weatherlist
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.weather_item_layout.view.*
 
 /**
  * Class specific for translating today's weather data into a recyclerview
@@ -29,11 +28,7 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
                 )
         )
 
-    /**z
-     * Limits the number of returned items from the dataset to just the next 24H of data
-     * @author: Jess Osborn
-     */
-    override fun getItemCount(): Int = 8
+    override fun getItemCount(): Int = dataSet.size
 
     override fun onBindViewHolder(holder: CustomViewHolder, position: Int) {
         holder.onBind(dataSet, position)
@@ -45,22 +40,18 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
      * @author: Jess Osborn
      */
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-        var tvTime: TextView = itemView.findViewById(R.id.tv_time)
-        var tvTemp: TextView = itemView.findViewById(R.id.tv_temp)
-        var ivWeatherIcon: ImageView = itemView.findViewById(R.id.iv_weather_icon)
+
 
         fun onBind(data: List<weatherlist>, position: Int) {
-            //pass data to weather_item_layout views
-            ivWeatherIcon.clearColorFilter()
-            tvTime.text = (data[position].dt_txt).substring(11, 16)
-            tvTemp.text = data[position].main.temp + "°"
+            itemView.iv_weather_icon.clearColorFilter()
+            itemView.tv_time.text = (data[position].dt_txt).substring(11, 16)
+            itemView.tv_temp.text = "${data[position].main.temp} °"
             var iconString = data[position].weather[0].icon
-
 
             //Find high and low temps. This is called on each item, so grossly inefficient
             var lowIndex = 0
             var highIndex = 0
-            for (i in 1..7) {
+            for (i in data.indices) {
                 if (data[i].main.temp > data[highIndex].main.temp) {
                     highIndex = i
                 }
@@ -68,22 +59,21 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
                     lowIndex = i
                 }
             }
-            //TODO custom icons
+
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .resize(400, 400)
                 .centerCrop()
-                .into(ivWeatherIcon)
+                .into(itemView.iv_weather_icon)
             //assign color based on high or low temp
             if (position == lowIndex) {
-                tvTemp.setTextColor(Color.parseColor("#03a9f4"))
-                tvTime.setTextColor(Color.parseColor("#03a9f4"))
-                ivWeatherIcon.setColorFilter(Color.parseColor("#03a9f4"))
+                itemView.tv_temp.setTextColor(Color.parseColor("#03a9f4"))
+                itemView.tv_time.setTextColor(Color.parseColor("#03a9f4"))
+                itemView.iv_weather_icon.setColorFilter(Color.parseColor("#03a9f4"))
             } else if (position == highIndex) {
-                tvTemp.setTextColor(Color.parseColor("#ff9800"))
-                tvTime.setTextColor(Color.parseColor("#ff9800"))
-                ivWeatherIcon.setColorFilter(Color.parseColor("#ff9800"))
+                itemView.tv_temp.setTextColor(Color.parseColor("#ff9800"))
+                itemView.tv_time.setTextColor(Color.parseColor("#ff9800"))
+                itemView.iv_weather_icon.setColorFilter(Color.parseColor("#ff9800"))
             }
-
         }
     }
 }
