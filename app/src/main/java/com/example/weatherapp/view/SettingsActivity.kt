@@ -71,7 +71,8 @@ class SettingsActivity : AppCompatActivity() {
      * @author: Jess Osborn
      */
     private fun isValidZip(text: String): Boolean {
-        val pattern = Regex("^[0-9]{5}")            //Zipcode pattern is 5 digits
-        return pattern.matches(text)                        //return true if input matches pattern
+        //TODO: Add Canadian Regex pattern, check against both
+        val americanZipFormat = Regex("^[0-9]{5}")
+        return americanZipFormat.matches(text)
     }
 }

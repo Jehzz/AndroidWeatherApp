@@ -8,12 +8,12 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Network class starts Retrofit
  * @author: Jess Osborn
  */
-class Network (var url: String){
+class Network(private var url: String) {
     fun initRetrofit(): RetrofitEndpoint {
-        var retrofit = Retrofit.Builder()
+        val retrofit = Retrofit.Builder()
             .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())  //RxJava currently unused, may utilize in Repository layer
             .build()
 
         return retrofit.create(RetrofitEndpoint::class.java)

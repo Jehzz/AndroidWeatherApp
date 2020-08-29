@@ -1,6 +1,5 @@
 package com.example.weatherapp.view
 
-
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -45,18 +44,19 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
         fun onBind(data: List<weatherlist>, position: Int) {
             itemView.iv_weather_icon.clearColorFilter()
             itemView.tv_time.text = (data[position].dt_txt).substring(11, 16)
-            itemView.tv_temp.text = "${data[position].main.temp} °"
-            var iconString = data[position].weather[0].icon
+            itemView.tv_temp.text = data[position].main.temp + "°"
+            val iconString = data[position].weather[0].icon
 
+            //TODO: fix this
             //Find high and low temps. This is called on each item, so grossly inefficient
-            var lowIndex = 0
-            var highIndex = 0
+            var coldestIndex = 0
+            var hottestIndex = 0
             for (i in data.indices) {
-                if (data[i].main.temp > data[highIndex].main.temp) {
-                    highIndex = i
+                if (data[i].main.temp > data[hottestIndex].main.temp) {
+                    hottestIndex = i
                 }
-                if (data[i].main.temp < data[lowIndex].main.temp) {
-                    lowIndex = i
+                if (data[i].main.temp < data[coldestIndex].main.temp) {
+                    coldestIndex = i
                 }
             }
 
@@ -65,11 +65,11 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
                 .centerCrop()
                 .into(itemView.iv_weather_icon)
             //assign color based on high or low temp
-            if (position == lowIndex) {
+            if (position == coldestIndex) {
                 itemView.tv_temp.setTextColor(Color.parseColor("#03a9f4"))
                 itemView.tv_time.setTextColor(Color.parseColor("#03a9f4"))
                 itemView.iv_weather_icon.setColorFilter(Color.parseColor("#03a9f4"))
-            } else if (position == highIndex) {
+            } else if (position == hottestIndex) {
                 itemView.tv_temp.setTextColor(Color.parseColor("#ff9800"))
                 itemView.tv_time.setTextColor(Color.parseColor("#ff9800"))
                 itemView.iv_weather_icon.setColorFilter(Color.parseColor("#ff9800"))

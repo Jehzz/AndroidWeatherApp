@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weatherapp.R
-import com.example.weatherapp.model.CurrentWeatherData
-import com.example.weatherapp.model.ForecastWeatherData
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -47,14 +44,14 @@ class MainActivity : AppCompatActivity() {
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
         }
-        createObservables()
-        weatherViewModel.getCurrentWeather(userZip!!, preferredUnits!!)
+        createObservers()
+        weatherViewModel.fetchWeatherFromApi(userZip!!, preferredUnits!!)
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         readUserPrefs()
-        weatherViewModel.getCurrentWeather(userZip!!, preferredUnits!!)
+        weatherViewModel.fetchWeatherFromApi(userZip!!, preferredUnits!!)
     }
 
     override fun onStart() {
@@ -62,11 +59,11 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onStart: ")
     }
 
-    private fun createObservables() {
-        Log.d(TAG, "createObservables: ")
+    private fun createObservers() {
+        Log.d(TAG, "createObservers: ")
 
         weatherViewModel.getForecastWeatherData()
-            .observe(this, Observer<ForecastWeatherData> { t ->
+            .observe(this, { t ->
                 rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
                 rv_todays_weather.adapter = ForecastAdapter(t.list.take(8))
                 rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
@@ -75,10 +72,10 @@ class MainActivity : AppCompatActivity() {
 
         //Current Weather Card logic
         weatherViewModel.getCurrentWeatherData()
-            .observe(this, Observer<CurrentWeatherData> { t ->
+            .observe(this, { t ->
                 tv_city_name.text = t.name
                 tv_description.text = t.weather[0].main
-                tv_current_temp.text = (t.main.temp) + "°"
+                tv_current_temp.text = t.main.temp + "°"
                 if ((t.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
                     || ((t.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))
                 ) {

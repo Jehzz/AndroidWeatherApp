@@ -1,10 +1,8 @@
 package com.example.weatherapp.model
 
-
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-
 
 /**
  * Retrofit creates the correct API call and maps the returned data to the Poko classes
