@@ -6,14 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.weatherapp.R
-import com.example.weatherapp.model.weatherlist
+import com.example.weatherapp.model.repository.weatherlist
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_item_layout.view.*
 
-/**
- * Class specific for translating today's weather data into a recyclerview
- * @author: Jess Osborn
- */
 class ForecastAdapter(private val dataSet: List<weatherlist>) :
     RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
 
@@ -33,13 +29,7 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
         holder.onBind(dataSet, position)
     }
 
-    /**
-     * Binds data from the dataset to weather_item_layout views. Includes logic to color code
-     * daily high and low temperatures
-     * @author: Jess Osborn
-     */
     class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
-
 
         fun onBind(data: List<weatherlist>, position: Int) {
             itemView.iv_weather_icon.clearColorFilter()
@@ -62,7 +52,6 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
 
             Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
                 .resize(400, 400)
-                .centerCrop()
                 .into(itemView.iv_weather_icon)
             //assign color based on high or low temp
             if (position == coldestIndex) {

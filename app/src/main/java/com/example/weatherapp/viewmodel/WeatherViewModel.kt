@@ -1,16 +1,10 @@
 package com.example.weatherapp.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.weatherapp.model.CurrentWeatherData
-import com.example.weatherapp.model.ForecastWeatherData
-import com.example.weatherapp.model.Network
-import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.example.weatherapp.model.repository.CurrentWeatherData
+import com.example.weatherapp.model.repository.ForecastWeatherData
+import com.example.weatherapp.model.repository.WeatherRepository
 
 /**
  * This class is responsible for creating the network connection, calling Retrofit, storing the
@@ -21,61 +15,17 @@ class WeatherViewModel : ViewModel() {
 
     private val TAG = "WeatherViewModel"
 
-    private val viewModelJob = SupervisorJob()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    private val weatherRepo = WeatherRepository()
 
-    private val currentWeatherDataSet = MutableLiveData<CurrentWeatherData>()
-    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> {
-        return currentWeatherDataSet
+    val currentWeatherDataSet: LiveData<CurrentWeatherData>
+    val forecastWeatherDataSet: LiveData<ForecastWeatherData>
+
+    init {
+        currentWeatherDataSet = weatherRepo.getCurrentWeatherData()
+        forecastWeatherDataSet = weatherRepo.getForecastWeatherData()
     }
-
-    private val forecastWeatherDataSet = MutableLiveData<ForecastWeatherData>()
-    fun getForecastWeatherData(): LiveData<ForecastWeatherData> {
-        return forecastWeatherDataSet
-    }
-
-    val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-    val key: String = "ca3efb1692ca390683b47b41ade98581"
 
     fun fetchWeatherFromApi(zip: String, units: String) {
-
-        //TODO: inject network dependency
-        val network = Network(baseApiUrl)
-
-        uiScope.launch {
-            withContext(Dispatchers.Default) {
-                network.initRetrofit().getCurrentWeather(zip, key, units)
-                    .enqueue(object : Callback<CurrentWeatherData> {
-                        override fun onResponse(
-                            call: Call<CurrentWeatherData>,
-                            response: Response<CurrentWeatherData>,
-                        ) {
-                            Log.d(TAG, "onResponse: Current Weather: " + response.body().toString())
-                            currentWeatherDataSet.value = response.body()
-                        }
-
-                        override fun onFailure(call: Call<CurrentWeatherData>, t: Throwable) {
-                            Log.d(TAG, "onFailure: Current Weather: " + t.printStackTrace())
-                        }
-                    })
-            }
-
-            withContext(Dispatchers.Default) {
-                network.initRetrofit().getForecastWeather(zip, key, units)
-                    .enqueue(object : Callback<ForecastWeatherData> {
-                        override fun onResponse(
-                            call: Call<ForecastWeatherData>,
-                            response: Response<ForecastWeatherData>,
-                        ) {
-                            Log.d(TAG, "onResponse: Forecast Weather " + response.body().toString())
-                            forecastWeatherDataSet.value = response.body()
-                        }
-
-                        override fun onFailure(call: Call<ForecastWeatherData>, t: Throwable) {
-                            Log.d(TAG, "onFailure: Forecast Weather: " + t.printStackTrace())
-                        }
-                    })
-            }
-        }
+        weatherRepo.fetchWeatherFromApi(zip, units)
     }
 }

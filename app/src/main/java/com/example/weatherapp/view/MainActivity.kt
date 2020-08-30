@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     private fun createObservers() {
         Log.d(TAG, "createObservers: ")
 
-        weatherViewModel.getForecastWeatherData()
+        weatherViewModel.forecastWeatherDataSet
             .observe(this, { t ->
                 rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
                 rv_todays_weather.adapter = ForecastAdapter(t.list.take(8))
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             })
 
         //Current Weather Card logic
-        weatherViewModel.getCurrentWeatherData()
+        weatherViewModel.currentWeatherDataSet
             .observe(this, { t ->
                 tv_city_name.text = t.name
                 tv_description.text = t.weather[0].main

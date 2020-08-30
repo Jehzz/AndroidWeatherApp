@@ -1,4 +1,4 @@
-package com.example.weatherapp.model
+package com.example.weatherapp.model.repository
 
 /**
  * Data class for holding the forecast information provided by openweather
