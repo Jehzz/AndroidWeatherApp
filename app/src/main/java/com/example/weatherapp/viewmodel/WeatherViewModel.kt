@@ -2,6 +2,7 @@ package com.example.weatherapp.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.example.weatherapp.model.repository.CurrentWeatherData
 import com.example.weatherapp.model.repository.ForecastWeatherData
 import com.example.weatherapp.model.repository.WeatherRepository
@@ -15,17 +16,26 @@ class WeatherViewModel : ViewModel() {
 
     private val TAG = "WeatherViewModel"
 
+    //TODO: Inject Repo dependency
     private val weatherRepo = WeatherRepository()
 
     val currentWeatherDataSet: LiveData<CurrentWeatherData>
     val forecastWeatherDataSet: LiveData<ForecastWeatherData>
+    val isNetworkLoading: LiveData<Boolean>
 
     init {
         currentWeatherDataSet = weatherRepo.getCurrentWeatherData()
         forecastWeatherDataSet = weatherRepo.getForecastWeatherData()
+        isNetworkLoading = weatherRepo.getIsNetworkLoading()
     }
 
     fun fetchWeatherFromApi(zip: String, units: String) {
         weatherRepo.fetchWeatherFromApi(zip, units)
+    }
+}
+
+class WeatherViewModelFactory : ViewModelProvider.Factory {
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return WeatherViewModel() as T
     }
 }

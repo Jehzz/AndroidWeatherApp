@@ -9,29 +9,29 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class WeatherRepository() {
+class WeatherRepository {
 
     private val TAG = "WeatherRepository"
+
+    private val currentWeatherData = MutableLiveData<CurrentWeatherData>()
+    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> = currentWeatherData
+
+    private val forecastWeatherData = MutableLiveData<ForecastWeatherData>()
+    fun getForecastWeatherData(): LiveData<ForecastWeatherData> = forecastWeatherData
+
+    private val isNetworkLoading = MutableLiveData<Boolean>()
+    fun getIsNetworkLoading(): LiveData<Boolean> = isNetworkLoading
+
+    private val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
+    private val key: String = "ca3efb1692ca390683b47b41ade98581"
+    private val network = Network(baseApiUrl)   //TODO: Inject Network dependency
 
     private val repoJob = SupervisorJob()
     private val repoScope = CoroutineScope(Dispatchers.Main + repoJob)
 
-    private val currentWeatherData = MutableLiveData<CurrentWeatherData>()
-    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> {
-        return currentWeatherData
-    }
-
-    private val forecastWeatherData = MutableLiveData<ForecastWeatherData>()
-    fun getForecastWeatherData(): LiveData<ForecastWeatherData> {
-        return forecastWeatherData
-    }
-
-    private val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-    private val key: String = "ca3efb1692ca390683b47b41ade98581"
-
     fun fetchWeatherFromApi(zip: String, units: String) {
 
-        val network = Network(baseApiUrl)
+        isNetworkLoading.value = true
 
         repoScope.launch {
             withContext(Dispatchers.IO) {
@@ -60,10 +60,12 @@ class WeatherRepository() {
                         ) {
                             Log.d(TAG, "onResponse: Forecast Weather " + response.body().toString())
                             forecastWeatherData.value = response.body()
+                            isNetworkLoading.value = false
                         }
 
                         override fun onFailure(call: Call<ForecastWeatherData>, t: Throwable) {
                             Log.d(TAG, "onFailure: Forecast Weather: " + t.printStackTrace())
+                            isNetworkLoading.value = false
                         }
                     })
             }
