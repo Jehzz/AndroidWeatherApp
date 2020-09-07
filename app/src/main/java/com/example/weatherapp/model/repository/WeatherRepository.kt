@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.weatherapp.model.network.Network
+import com.example.weatherapp.utils.baseApiUrl
+import com.example.weatherapp.utils.key
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -13,28 +15,25 @@ class WeatherRepository {
 
     private val TAG = "WeatherRepository"
 
-    private val currentWeatherData = MutableLiveData<CurrentWeatherData>()
-    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> = currentWeatherData
-
-    private val forecastWeatherData = MutableLiveData<ForecastWeatherData>()
-    fun getForecastWeatherData(): LiveData<ForecastWeatherData> = forecastWeatherData
-
-    private val isNetworkLoading = MutableLiveData<Boolean>()
-    fun getIsNetworkLoading(): LiveData<Boolean> = isNetworkLoading
-
-    private val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-    private val key: String = "ca3efb1692ca390683b47b41ade98581"
-    private val network = Network(baseApiUrl)   //TODO: Inject Network dependency
+    //TODO: Inject Network dependency
+    private val network = Network(baseApiUrl)
 
     private val repoJob = SupervisorJob()
-    private val repoScope = CoroutineScope(Dispatchers.Main + repoJob)
+    private val repoScope = CoroutineScope(Dispatchers.IO + repoJob)
+
+    private val currentWeatherData = MutableLiveData<CurrentWeatherData>()
+    private val forecastWeatherData = MutableLiveData<ForecastWeatherData>()
+    private val isNetworkLoading = MutableLiveData<Boolean>()
+
+    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> = currentWeatherData
+    fun getForecastWeatherData(): LiveData<ForecastWeatherData> = forecastWeatherData
+    fun getIsNetworkLoading(): LiveData<Boolean> = isNetworkLoading
 
     fun fetchWeatherFromApi(zip: String, units: String) {
-
         isNetworkLoading.value = true
 
         repoScope.launch {
-            withContext(Dispatchers.IO) {
+            withContext(this.coroutineContext) {
                 network.initRetrofit().getCurrentWeather(zip, key, units)
                     .enqueue(object : Callback<CurrentWeatherData> {
                         override fun onResponse(
@@ -50,8 +49,7 @@ class WeatherRepository {
                         }
                     })
             }
-
-            withContext(Dispatchers.IO) {
+            withContext(this.coroutineContext) {
                 network.initRetrofit().getForecastWeather(zip, key, units)
                     .enqueue(object : Callback<ForecastWeatherData> {
                         override fun onResponse(

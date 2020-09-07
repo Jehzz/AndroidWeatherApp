@@ -1,12 +1,12 @@
 package com.example.weatherapp.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.example.weatherapp.R
+import com.example.weatherapp.utils.isValidZip
 import kotlinx.android.synthetic.main.activity_settings.*
 
 /**
@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_settings.*
 class SettingsActivity : AppCompatActivity() {
 
     private val TAG = "SettingsActivity"
-
     private val PREFS_NAME = "weather prefs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +49,7 @@ class SettingsActivity : AppCompatActivity() {
      */
     private fun saveInputs() {
         Log.d(TAG, "saveInputs: ")
-        val sharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("userZip", et_zip.text.toString()).apply()
         editor.putString("preferredUnits", spinner_units.selectedItem.toString()).apply()
@@ -64,15 +63,5 @@ class SettingsActivity : AppCompatActivity() {
     private fun readUserPrefs() {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         et_zip.setText(sharedPreferences.getString("userZip", null))
-    }
-
-    /**
-     * Simple REGEX function to check the submitted zipcode format. Does not check if zipcode is real
-     * @author: Jess Osborn
-     */
-    private fun isValidZip(text: String): Boolean {
-        //TODO: Add Canadian Regex pattern, check against both
-        val americanZipFormat = Regex("^[0-9]{5}")
-        return americanZipFormat.matches(text)
     }
 }

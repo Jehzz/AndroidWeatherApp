@@ -11,12 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.weatherapp.R
 import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.viewmodel.WeatherViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
-/**
- * MainActivity is responsible for checking user input, and binding UI elements to the datasets
- * @author: Jess Osborn
- */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
@@ -39,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         readUserPrefs()
         createObservers()
 
-        userZip ?: let {
+        userZip?.replace(" ", "") ?: let {
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
         }
