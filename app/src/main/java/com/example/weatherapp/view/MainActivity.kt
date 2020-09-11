@@ -46,7 +46,8 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         readUserPrefs()
-        weatherViewModel.fetchWeatherFromApi(userZip!!, preferredUnits!!)
+        val key = resources.getString(R.string.api_key)
+        weatherViewModel.fetchWeatherFromApi(userZip!!, preferredUnits!!, key)
     }
 
     override fun onStart() {

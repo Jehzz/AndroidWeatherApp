@@ -24,14 +24,7 @@ class SettingsActivity : AppCompatActivity() {
 
         readUserPrefs()
 
-        btn_save.setOnClickListener {
-            if (isValidZip(et_zip.text.toString())) {
-                saveInputs()
-                startActivity(Intent(this, MainActivity::class.java))
-            } else {
-                et_zip.error = "Enter a proper Zip Code"
-            }
-        }
+        setOnClickListeners()
 
         ArrayAdapter.createFromResource(
             this,
@@ -43,10 +36,17 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * Saves inputs to sharedPreferences
-     * @author: Jess Osborn
-     */
+    private fun setOnClickListeners() {
+        btn_save.setOnClickListener {
+            if (isValidZip(et_zip.text.toString())) {
+                saveInputs()
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                et_zip.error = "Enter a proper Zip Code"
+            }
+        }
+    }
+
     private fun saveInputs() {
         Log.d(TAG, "saveInputs: ")
         val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
@@ -56,10 +56,6 @@ class SettingsActivity : AppCompatActivity() {
         editor.commit()
     }
 
-    /**
-     * Loads previously entered zipcode from sharedPreferences
-     * @author: Jess Osborn
-     */
     private fun readUserPrefs() {
         val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         et_zip.setText(sharedPreferences.getString("userZip", null))

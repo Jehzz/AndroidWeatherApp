@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.weatherapp.model.network.Network
 import com.example.weatherapp.utils.baseApiUrl
-import com.example.weatherapp.utils.key
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,7 +28,7 @@ class WeatherRepository {
     fun getForecastWeatherData(): LiveData<ForecastWeatherData> = forecastWeatherData
     fun getIsNetworkLoading(): LiveData<Boolean> = isNetworkLoading
 
-    fun fetchWeatherFromApi(zip: String, units: String) {
+    fun fetchWeatherFromApi(zip: String, units: String, key: String) {
         isNetworkLoading.value = true
 
         repoScope.launch {

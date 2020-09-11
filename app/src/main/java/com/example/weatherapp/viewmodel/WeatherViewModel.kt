@@ -29,8 +29,8 @@ class WeatherViewModel : ViewModel() {
         isNetworkLoading = weatherRepo.getIsNetworkLoading()
     }
 
-    fun fetchWeatherFromApi(zip: String, units: String) {
-        weatherRepo.fetchWeatherFromApi(zip, units)
+    fun fetchWeatherFromApi(zip: String, units: String, key: String) {
+        weatherRepo.fetchWeatherFromApi(zip, units, key)
     }
 }
 
