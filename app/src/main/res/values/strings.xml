@@ -4,6 +4,8 @@
     <string name="weather_icon">weather icon</string>
     <string name="tomorrows_weather">Tomorrows Weather</string>
     <string name="today_s_weather">Today\'s Weather</string>
+    <string name="save">Save</string>
+    <string name="enter_zip_code">Enter ZipCode</string>
 
     <string-array name="spinner_options_array">
         <item>Imperial</item>

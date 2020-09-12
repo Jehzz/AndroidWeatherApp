@@ -37,7 +37,11 @@ class MainActivity : AppCompatActivity() {
         readUserPrefs()
         createObservers()
 
-        userZip?.replace(" ", "") ?: let {
+        userZip?.let {
+            weatherViewModel.fetchWeatherFromApi(it,
+                preferredUnits ?: "Imperial",
+                resources.getString(R.string.api_key))
+        } ?: run {
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
         }
@@ -46,8 +50,12 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         readUserPrefs()
-        val key = resources.getString(R.string.api_key)
-        weatherViewModel.fetchWeatherFromApi(userZip!!, preferredUnits!!, key)
+        userZip?.let {
+            weatherViewModel.fetchWeatherFromApi(it,
+                preferredUnits ?: "Imperial",
+                resources.getString(R.string.api_key))
+        }
+
     }
 
     override fun onStart() {
@@ -60,16 +68,14 @@ class MainActivity : AppCompatActivity() {
 
         weatherViewModel.forecastWeatherDataSet
             .observe(this, {
-                it?.let {//Let block to avoid NPE on weatherdata when user enters valid but non-existent zipcode
-                    rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
-                    rv_todays_weather.adapter = ForecastAdapter(it.list.take(8))
-                    rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
-                    rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8))
-                }
+                rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
+                rv_todays_weather.adapter = ForecastAdapter(it.list.take(8))
+                rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
+                rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8))
+
             })
         weatherViewModel.currentWeatherDataSet
             .observe(this, {
-                it?.let {
                     tv_city_name.text = it.name
                     tv_description.text = it.weather[0].main
                     tv_current_temp.text = it.main.temp + "°"
@@ -84,7 +90,6 @@ class MainActivity : AppCompatActivity() {
                             ContextCompat.getColor(applicationContext, R.color.colorWarm)
                         )
                     }
-                }
             })
         weatherViewModel.isNetworkLoading
             .observe(this, {
