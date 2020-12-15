@@ -23,10 +23,12 @@ class WeatherRepository {
     private val currentWeatherData = MutableLiveData<CurrentWeatherData>()
     private val forecastWeatherData = MutableLiveData<ForecastWeatherData>()
     private val isNetworkLoading = MutableLiveData<Boolean>()
+    private val errorMessage = MutableLiveData<String>()
 
     fun getCurrentWeatherData(): LiveData<CurrentWeatherData> = currentWeatherData
     fun getForecastWeatherData(): LiveData<ForecastWeatherData> = forecastWeatherData
     fun getIsNetworkLoading(): LiveData<Boolean> = isNetworkLoading
+    fun getErrorMessage(): LiveData<String> = errorMessage
 
     fun fetchWeatherFromApi(zip: String, units: String, key: String) {
         isNetworkLoading.value = true
@@ -45,6 +47,7 @@ class WeatherRepository {
 
                         override fun onFailure(call: Call<CurrentWeatherData>, t: Throwable) {
                             Log.d(TAG, "onFailure: Current Weather: " + t.printStackTrace())
+                            errorMessage.value = "Weather Server is not reachable"
                         }
                     })
             }

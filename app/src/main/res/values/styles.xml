@@ -3,12 +3,27 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="android:forceDarkAllowed">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <!-- Custom Styles for app components go here -->
+    <style name="SettingsButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/WhiteThemeOverlay</item>
+    </style>
+
+    <style name="SaveButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/BluehemeOverlay</item>
+    </style>
+
+    <style name="BluehemeOverlay">
+        <item name="colorPrimary">@color/colorCool</item>
+    </style>
+
+    <style name="WhiteThemeOverlay">
+        <item name="colorPrimary">@color/colorButton</item>
+    </style>
+
 
 </resources>

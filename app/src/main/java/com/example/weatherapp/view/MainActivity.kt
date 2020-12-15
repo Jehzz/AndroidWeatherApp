@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -72,24 +73,23 @@ class MainActivity : AppCompatActivity() {
                 rv_todays_weather.adapter = ForecastAdapter(it.list.take(8))
                 rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
                 rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8))
-
             })
         weatherViewModel.currentWeatherDataSet
             .observe(this, {
-                    tv_city_name.text = it.name
-                    tv_description.text = it.weather[0].main
-                    tv_current_temp.text = it.main.temp + "°"
-                    if ((it.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
-                        || ((it.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))
-                    ) {
-                        cv_today_weather.setCardBackgroundColor(
-                            ContextCompat.getColor(applicationContext, R.color.colorCool)
-                        )
-                    } else {
-                        cv_today_weather.setCardBackgroundColor(
-                            ContextCompat.getColor(applicationContext, R.color.colorWarm)
-                        )
-                    }
+                tv_city_name.text = it.name
+                tv_description.text = it.weather[0].main
+                tv_current_temp.text = it.main.temp + "°"
+                if ((it.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
+                    || ((it.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))
+                ) {
+                    cv_today_weather.setCardBackgroundColor(
+                        ContextCompat.getColor(applicationContext, R.color.colorCool)
+                    )
+                } else {
+                    cv_today_weather.setCardBackgroundColor(
+                        ContextCompat.getColor(applicationContext, R.color.colorWarm)
+                    )
+                }
             })
         weatherViewModel.isNetworkLoading
             .observe(this, {
@@ -97,6 +97,11 @@ class MainActivity : AppCompatActivity() {
                     true -> progressBar.visibility = View.VISIBLE
                     false -> progressBar.visibility = View.GONE
                 }
+            })
+
+        weatherViewModel.networkError
+            .observe(this, {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
             })
     }
 

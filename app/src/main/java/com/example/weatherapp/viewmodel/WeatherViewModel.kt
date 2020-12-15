@@ -22,11 +22,13 @@ class WeatherViewModel : ViewModel() {
     val currentWeatherDataSet: LiveData<CurrentWeatherData>
     val forecastWeatherDataSet: LiveData<ForecastWeatherData>
     val isNetworkLoading: LiveData<Boolean>
+    val networkError: LiveData<String>
 
     init {
         currentWeatherDataSet = weatherRepo.getCurrentWeatherData()
         forecastWeatherDataSet = weatherRepo.getForecastWeatherData()
         isNetworkLoading = weatherRepo.getIsNetworkLoading()
+        networkError = weatherRepo.getErrorMessage()
     }
 
     fun fetchWeatherFromApi(zip: String, units: String, key: String) {

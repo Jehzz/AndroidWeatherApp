@@ -13,15 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
         android:layout_marginTop="25dp"
+        android:autofillHints="5 digit zip code"
         android:ems="10"
         android:hint="@string/enter_zip_code"
         android:inputType="textPersonName"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="zip input" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        style="@style/SaveButtonStyle"
         android:id="@+id/btn_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
