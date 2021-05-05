@@ -35,7 +35,6 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
             itemView.iv_weather_icon.clearColorFilter()
             itemView.tv_time.text = (data[position].dt_txt).substring(11, 16)
             itemView.tv_temp.text = data[position].main.temp + "°"
-            val iconString = data[position].weather[0].icon
 
             //TODO: fix this
             //Find high and low temps. This is called on each item, so grossly inefficient
@@ -44,13 +43,13 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
             for (i in data.indices) {
                 if (data[i].main.temp > data[hottestIndex].main.temp) {
                     hottestIndex = i
-                }
-                if (data[i].main.temp < data[coldestIndex].main.temp) {
+                } else if (data[i].main.temp < data[coldestIndex].main.temp) {
                     coldestIndex = i
                 }
             }
 
-            Picasso.get().load("http://openweathermap.org/img/wn/$iconString@2x.png")
+            Picasso.get()
+                .load("http://openweathermap.org/img/wn/${data[position].weather[0].icon}@2x.png")
                 .resize(400, 400)
                 .into(itemView.iv_weather_icon)
             //assign color based on high or low temp

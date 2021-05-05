@@ -7,28 +7,37 @@
     tools:context=".view.SettingsActivity">
 
 
+    <TextView
+        android:id="@+id/tv_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Settings"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/et_zip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="24dp"
         android:autofillHints="5 digit zip code"
         android:ems="10"
         android:hint="@string/enter_zip_code"
         android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_settings" />
 
     <Button
         style="@style/SaveButtonStyle"
         android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="34dp"
-        android:text="@string/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_units" />
 
@@ -40,4 +49,5 @@
         app:layout_constraintEnd_toEndOf="@+id/et_zip"
         app:layout_constraintStart_toStartOf="@+id/et_zip"
         app:layout_constraintTop_toBottomOf="@+id/et_zip" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

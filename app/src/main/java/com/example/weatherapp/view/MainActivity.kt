@@ -59,14 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(TAG, "onStart: ")
-    }
-
     private fun createObservers() {
-        Log.d(TAG, "createObservers: ")
-
         weatherViewModel.forecastWeatherDataSet
             .observe(this, {
                 rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
@@ -106,14 +99,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun readUserPrefs() {
-        Log.d(TAG, "readUserPrefs: ")
         val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
         userZip = sharedPreferences.getString("userZip", null)
         preferredUnits = sharedPreferences.getString("preferredUnits", null)
     }
 
     private fun setOnClickListeners() {
-        Log.d(TAG, "setOnClickListeners: ")
         btn_settings.setOnClickListener {
             val settingsIntent = Intent(this, SettingsActivity::class.java)
             startActivity(settingsIntent)
