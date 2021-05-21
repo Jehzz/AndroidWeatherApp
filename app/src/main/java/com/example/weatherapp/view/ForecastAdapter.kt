@@ -1,10 +1,10 @@
 package com.example.weatherapp.view
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.weatherapp.App.Companion.context
 import com.example.weatherapp.R
 import com.example.weatherapp.model.repository.weatherlist
 import com.squareup.picasso.Picasso
@@ -54,13 +54,13 @@ class ForecastAdapter(private val dataSet: List<weatherlist>) :
                 .into(itemView.iv_weather_icon)
             //assign color based on high or low temp
             if (position == coldestIndex) {
-                itemView.tv_temp.setTextColor(Color.parseColor("#03a9f4"))
-                itemView.tv_time.setTextColor(Color.parseColor("#03a9f4"))
-                itemView.iv_weather_icon.setColorFilter(Color.parseColor("#03a9f4"))
+                itemView.tv_temp.setTextColor(context.getColor(R.color.colorCool))
+                itemView.tv_time.setTextColor(context.getColor(R.color.colorCool))
+                itemView.iv_weather_icon.setColorFilter(context.getColor(R.color.colorCool))
             } else if (position == hottestIndex) {
-                itemView.tv_temp.setTextColor(Color.parseColor("#ff9800"))
-                itemView.tv_time.setTextColor(Color.parseColor("#ff9800"))
-                itemView.iv_weather_icon.setColorFilter(Color.parseColor("#ff9800"))
+                itemView.tv_temp.setTextColor(context.getColor(R.color.colorWarm))
+                itemView.tv_time.setTextColor(context.getColor(R.color.colorWarm))
+                itemView.iv_weather_icon.setColorFilter(context.getColor(R.color.colorWarm))
             }
         }
     }

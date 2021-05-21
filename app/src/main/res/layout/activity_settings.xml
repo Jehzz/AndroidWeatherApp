@@ -12,31 +12,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_zip"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:autofillHints="5 digit zip code"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="5 digit US zip code"
         android:ems="10"
         android:hint="@string/enter_zip_code"
-        android:inputType="textPersonName"
-        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_settings" />
 
     <Button
-        style="@style/SaveButtonStyle"
         android:id="@+id/btn_save"
-        android:layout_marginTop="16dp"
+        style="@style/SaveButtonStyle"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="34dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_units" />
@@ -45,7 +46,7 @@
         android:id="@+id/spinner_units"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="@+id/et_zip"
         app:layout_constraintStart_toStartOf="@+id/et_zip"
         app:layout_constraintTop_toBottomOf="@+id/et_zip" />

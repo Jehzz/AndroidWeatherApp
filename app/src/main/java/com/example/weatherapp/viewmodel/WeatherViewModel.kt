@@ -7,29 +7,15 @@ import com.example.weatherapp.model.repository.CurrentWeatherData
 import com.example.weatherapp.model.repository.ForecastWeatherData
 import com.example.weatherapp.model.repository.WeatherRepository
 
-/**
- * This class is responsible for creating the network connection, calling Retrofit, storing the
- * returned data, and providing the information to the UI components
- * @author: Jess Osborn
- */
 class WeatherViewModel : ViewModel() {
-
-    private val TAG = "WeatherViewModel"
 
     //TODO: Inject Repo dependency
     private val weatherRepo = WeatherRepository()
 
-    val currentWeatherDataSet: LiveData<CurrentWeatherData>
-    val forecastWeatherDataSet: LiveData<ForecastWeatherData>
-    val isNetworkLoading: LiveData<Boolean>
-    val networkError: LiveData<String>
-
-    init {
-        currentWeatherDataSet = weatherRepo.getCurrentWeatherData()
-        forecastWeatherDataSet = weatherRepo.getForecastWeatherData()
-        isNetworkLoading = weatherRepo.getIsNetworkLoading()
-        networkError = weatherRepo.getErrorMessage()
-    }
+    val currentWeatherDataSet: LiveData<CurrentWeatherData> = weatherRepo.getCurrentWeatherData()
+    val forecastWeatherDataSet: LiveData<ForecastWeatherData> = weatherRepo.getForecastWeatherData()
+    val isNetworkLoading: LiveData<Boolean> = weatherRepo.getIsNetworkLoading()
+    val networkError: LiveData<String> = weatherRepo.getErrorMessage()
 
     fun fetchWeatherFromApi(zip: String, units: String, key: String) {
         weatherRepo.fetchWeatherFromApi(zip, units, key)

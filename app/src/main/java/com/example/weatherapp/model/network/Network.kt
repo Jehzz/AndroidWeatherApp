@@ -1,14 +1,15 @@
 package com.example.weatherapp.model.network
 
-import android.util.Log
-import com.example.weatherapp.App
+import com.example.weatherapp.App.Companion.context
 import com.example.weatherapp.utils.isOnline
-import okhttp3.*
+import okhttp3.Cache
+import okhttp3.CacheControl
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
@@ -16,7 +17,6 @@ import java.util.concurrent.TimeUnit
  * @author: Jess Osborn
  */
 class Network(private var url: String) {
-    val TAG = "Network"
 
     fun initRetrofit(): RetrofitEndpoint {
         val retrofit = Retrofit.Builder()
@@ -28,7 +28,6 @@ class Network(private var url: String) {
     }
 
     private fun initClient(): OkHttpClient {
-        Log.d(TAG, "initClient: creating new client")
         val client = OkHttpClient.Builder()
             .cache(cache())
             .addInterceptor(httpLoggingInterceptor())
@@ -39,42 +38,36 @@ class Network(private var url: String) {
 
     private fun cache(): Cache {
         val cacheSize = (5 * 1024 * 1024).toLong()
-        return Cache(File(App.context.cacheDir, "cache"), cacheSize)
+        return Cache(File(context.cacheDir, "cache"), cacheSize)
     }
 
     private fun httpLoggingInterceptor() =
         HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
 
     private fun offlineInterceptor(): Interceptor {
-        return object : Interceptor {
-            @Throws(IOException::class)
-            override fun intercept(chain: Interceptor.Chain): Response {
-                var request = chain.request()
-                if (!isOnline()) {
-                    val cacheControl = CacheControl.Builder()
-                        .maxStale(1, TimeUnit.DAYS)
-                        .build()
-                    request = request.newBuilder()
-                        .cacheControl(cacheControl)
-                        .build()
-                }
-                return chain.proceed(request)
+        return Interceptor { chain ->
+            var request = chain.request()
+            if (!isOnline()) {
+                val cacheControl = CacheControl.Builder()
+                    .maxStale(1, TimeUnit.DAYS)
+                    .build()
+                request = request.newBuilder()
+                    .cacheControl(cacheControl)
+                    .build()
             }
+            chain.proceed(request)
         }
     }
 
     private fun networkInterceptor(): Interceptor {
-        return object : Interceptor {
-            @Throws(IOException::class)
-            override fun intercept(chain: Interceptor.Chain): Response {
-                val response = chain.proceed(chain.request())
-                val cacheControl = CacheControl.Builder()
-                    .maxAge(5, TimeUnit.SECONDS)
-                    .build()
-                return response.newBuilder()
-                    .header("Cache-Control", cacheControl.toString())
-                    .build()
-            }
+        return Interceptor { chain ->
+            val response = chain.proceed(chain.request())
+            val cacheControl = CacheControl.Builder()
+                .maxAge(5, TimeUnit.SECONDS)
+                .build()
+            response.newBuilder()
+                .header("Cache-Control", cacheControl.toString())
+                .build()
         }
     }
 
