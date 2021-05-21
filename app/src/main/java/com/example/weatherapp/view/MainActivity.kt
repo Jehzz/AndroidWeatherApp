@@ -13,7 +13,6 @@ import com.example.weatherapp.viewmodel.WeatherViewModel
 import com.example.weatherapp.viewmodel.WeatherViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
-import java.time.ZonedDateTime
 import java.util.*
 
 @AndroidEntryPoint
@@ -62,12 +61,8 @@ class MainActivity : AppCompatActivity() {
         weatherViewModel.forecastWeatherDataSet
             .observe(this, { forecastWeatherData ->
                 forecastWeatherData?.let { it ->
-                    val strippedList = it.list.dropWhile {
-                        it.dt_txt.substring(11,
-                            13) < ZonedDateTime.now().hour.toString()
-                    }
-                    rv_todays_weather.adapter = ForecastAdapter(strippedList.take(8))
-                    rv_tomorrows_weather.adapter = ForecastAdapter(strippedList.drop(8))
+                    rv_todays_weather.adapter = ForecastAdapter(it.list.take(8))
+                    rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8))
                 }
             })
 
