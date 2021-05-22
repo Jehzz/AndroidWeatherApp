@@ -1,9 +1,5 @@
-package com.example.weatherapp.model.repository
+package com.example.simpleweather.model.repository
 
-/**
- * Data class for holding the forecast information provided by openweather
- * @author: Jess Osborn
- */
 data class ForecastWeatherData(
     var list: List<weatherlist>,
 )

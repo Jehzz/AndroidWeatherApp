@@ -1,4 +1,4 @@
-package com.example.weatherapp.view
+package com.example.simpleweather.view
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,9 +8,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.weatherapp.R
-import com.example.weatherapp.viewmodel.WeatherViewModel
-import com.example.weatherapp.viewmodel.WeatherViewModelFactory
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.simpleweather.R
+import com.example.simpleweather.viewmodel.WeatherViewModel
+import com.example.simpleweather.viewmodel.WeatherViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -31,7 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        rv_todays_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
+        rv_todays_weather.layoutManager =
+            LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
         rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
 
         setOnClickListeners()
@@ -62,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             .observe(this, { forecastWeatherData ->
                 forecastWeatherData?.let { it ->
                     rv_todays_weather.adapter = ForecastAdapter(it.list.take(8))
-                    rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8))
+                    rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8).take(8))
                 }
             })
 

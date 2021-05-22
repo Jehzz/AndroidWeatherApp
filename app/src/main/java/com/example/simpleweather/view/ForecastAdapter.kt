@@ -1,12 +1,12 @@
-package com.example.weatherapp.view
+package com.example.simpleweather.view
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.weatherapp.App.Companion.context
-import com.example.weatherapp.R
-import com.example.weatherapp.model.repository.weatherlist
+import com.example.simpleweather.App.Companion.context
+import com.example.simpleweather.R
+import com.example.simpleweather.model.repository.weatherlist
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_item_layout.view.*
 

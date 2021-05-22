@@ -1,7 +1,7 @@
-package com.example.weatherapp.model.network
+package com.example.simpleweather.model.network
 
-import com.example.weatherapp.App.Companion.context
-import com.example.weatherapp.utils.isOnline
+import com.example.simpleweather.App.Companion.context
+import com.example.simpleweather.utils.isOnline
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
@@ -12,10 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-/**
- * Network class starts Retrofit
- * @author: Jess Osborn
- */
 class Network(private var url: String) {
 
     fun initRetrofit(): RetrofitEndpoint {

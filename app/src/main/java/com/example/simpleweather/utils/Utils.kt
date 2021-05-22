@@ -1,9 +1,9 @@
-package com.example.weatherapp.utils
+package com.example.simpleweather.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.weatherapp.App.Companion.context
+import com.example.simpleweather.App.Companion.context
 
 
 const val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"

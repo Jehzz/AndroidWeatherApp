@@ -1,11 +1,11 @@
-package com.example.weatherapp.view
+package com.example.simpleweather.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.example.weatherapp.R
-import com.example.weatherapp.utils.isValidZip
+import com.example.simpleweather.R
+import com.example.simpleweather.utils.isValidZip
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {

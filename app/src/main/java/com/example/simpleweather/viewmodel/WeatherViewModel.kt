@@ -1,11 +1,11 @@
-package com.example.weatherapp.viewmodel
+package com.example.simpleweather.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.weatherapp.model.repository.CurrentWeatherData
-import com.example.weatherapp.model.repository.ForecastWeatherData
-import com.example.weatherapp.model.repository.WeatherRepository
+import com.example.simpleweather.model.repository.CurrentWeatherData
+import com.example.simpleweather.model.repository.ForecastWeatherData
+import com.example.simpleweather.model.repository.WeatherRepository
 
 class WeatherViewModel : ViewModel() {
 

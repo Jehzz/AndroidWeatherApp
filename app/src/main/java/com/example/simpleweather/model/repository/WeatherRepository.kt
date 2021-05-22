@@ -1,11 +1,11 @@
-package com.example.weatherapp.model.repository
+package com.example.simpleweather.model.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.weatherapp.model.network.Network
-import com.example.weatherapp.utils.baseApiUrl
-import com.example.weatherapp.utils.isCanadianZip
+import com.example.simpleweather.model.network.Network
+import com.example.simpleweather.utils.baseApiUrl
+import com.example.simpleweather.utils.isCanadianZip
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
