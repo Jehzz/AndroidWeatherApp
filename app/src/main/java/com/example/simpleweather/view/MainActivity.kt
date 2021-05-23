@@ -2,7 +2,6 @@ package com.example.simpleweather.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -36,17 +35,17 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
         rv_tomorrows_weather.layoutManager = GridLayoutManager(this@MainActivity, 4)
 
-        setOnClickListeners()
+        swipeRefreshLayout.setOnRefreshListener {
+            fetchWeatherFromViewModel()
+        }
+
+        btn_settings.setOnClickListener {
+            val settingsIntent = Intent(this, SettingsActivity::class.java)
+            startActivity(settingsIntent)
+        }
+
         readUserPrefs()
         createObservers()
-
-        userZip?.let {
-            weatherViewModel.fetchWeatherFromApi(it,
-                preferredUnits ?: "Imperial",
-                resources.getString(R.string.api_key))
-        } ?: run {
-            startActivity(Intent(this, SettingsActivity::class.java))
-        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -56,6 +55,16 @@ class MainActivity : AppCompatActivity() {
             weatherViewModel.fetchWeatherFromApi(it,
                 preferredUnits ?: "Imperial",
                 resources.getString(R.string.api_key))
+        }
+    }
+
+    private fun fetchWeatherFromViewModel() {
+        userZip?.let {
+            weatherViewModel.fetchWeatherFromApi(it,
+                preferredUnits ?: "Imperial",
+                resources.getString(R.string.api_key))
+        } ?: run {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 
@@ -91,8 +100,8 @@ class MainActivity : AppCompatActivity() {
         weatherViewModel.isNetworkLoading
             .observe(this, {
                 when (it) {
-                    true -> progressBar.visibility = View.VISIBLE
-                    false -> progressBar.visibility = View.GONE
+                    true -> swipeRefreshLayout.isRefreshing = true
+                    false -> swipeRefreshLayout.isRefreshing = false
                 }
             })
 
@@ -106,12 +115,5 @@ class MainActivity : AppCompatActivity() {
         userZip = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null)
         preferredUnits =
             getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("preferredUnits", null)
-    }
-
-    private fun setOnClickListeners() {
-        btn_settings.setOnClickListener {
-            val settingsIntent = Intent(this, SettingsActivity::class.java)
-            startActivity(settingsIntent)
-        }
     }
 }

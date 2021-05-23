@@ -8,10 +8,10 @@
     </style>
 
     <style name="SettingsButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="materialThemeOverlay">@style/WhiteThemeOverlay</item>
+        <item name="materialThemeOverlay">@style/ButtonThemeOverlay</item>
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">30dp</item>
-        <item name="android:background">@drawable/ic_settings_black_24dp</item>
+        <item name="android:background">@drawable/ic_settings_24dp</item>
     </style>
 
     <style name="SaveButtonStyle" parent="Widget.MaterialComponents.Button">
@@ -24,8 +24,8 @@
         <item name="colorPrimary">@color/colorCool</item>
     </style>
 
-    <style name="WhiteThemeOverlay">
-        <item name="colorPrimary">@android:color/white</item>
+    <style name="ButtonThemeOverlay">
+        <item name="colorPrimary">?attr/colorOnBackground</item>
     </style>
 
 </resources>

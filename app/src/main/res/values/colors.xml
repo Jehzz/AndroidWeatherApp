@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/colorCool</color>
-    <color name="colorPrimaryDark">@color/colorCool</color>
-    <color name="colorAccent">@color/colorCool</color>
+    <color name="colorPrimary">@color/primary</color>
+    <color name="colorPrimaryDark">@color/primaryDark</color>
+    <color name="colorAccent">@color/accent</color>
 
-    <color name="colorWarm">#ff9800</color>
+    <color name="accent">#FFC107</color>
+    <color name="primary">#2196F3</color>
+    <color name="primaryDark">#1976D2</color>
+
+    <color name="colorWarm">#ff8800</color>
     <color name="colorCool">#03a9f4</color>
 
 </resources>

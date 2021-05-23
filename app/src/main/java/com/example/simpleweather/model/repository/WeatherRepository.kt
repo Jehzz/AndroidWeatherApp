@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.simpleweather.model.network.Network
 import com.example.simpleweather.utils.baseApiUrl
-import com.example.simpleweather.utils.isCanadianZip
+import com.example.simpleweather.utils.isUsZip
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +33,7 @@ class WeatherRepository {
 
     fun fetchWeatherFromApi(zip: String, units: String, key: String) {
         isNetworkLoading.value = true
-        val country = if (isCanadianZip(zip)) "ca" else "us"
+        val country = if (isUsZip(zip)) "us" else ""
 
         repoScope.launch {
             withContext(this.coroutineContext) {
