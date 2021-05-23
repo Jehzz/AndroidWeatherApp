@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.simpleweather.model.network.Network
-import com.example.simpleweather.utils.baseApiUrl
 import com.example.simpleweather.utils.isUsZip
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -16,7 +15,7 @@ class WeatherRepository {
     private val TAG = "WeatherRepository"
 
     //TODO: Inject Network dependency
-    private val network = Network(baseApiUrl)
+    private val network = Network()
 
     private val repoJob = SupervisorJob()
     private val repoScope = CoroutineScope(Dispatchers.IO + repoJob)

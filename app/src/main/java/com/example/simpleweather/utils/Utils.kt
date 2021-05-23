@@ -5,9 +5,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import com.example.simpleweather.App.Companion.context
 
-
-const val baseApiUrl: String = "https://api.openweathermap.org/data/2.5/"
-
 fun isValidZip(text: String): Boolean {
     val scrubbedZip = text.replace(" ", "").uppercase()
     return isUsZip(scrubbedZip)

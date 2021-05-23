@@ -25,8 +25,9 @@ class SettingsActivity : AppCompatActivity() {
             if (isValidZip(et_zip.text.toString())) {
                 saveInputs()
                 startActivity(Intent(this, MainActivity::class.java))
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             } else {
-                et_zip.error = "Enter a proper Zip Code"
+                et_zip.error = getString(R.string.error_enter_valid_zip)
             }
         }
     }

@@ -1,28 +1,30 @@
 package com.example.simpleweather.model.repository
 
 data class ForecastWeatherData(
-    var list: List<weatherlist>,
+    var list: List<WeatherList>,
 )
 
 data class CurrentWeatherData(
     var name: String,
-    var weather: List<weatherdata>,
-    var main: main,
+    var main: Main,
+    var weather: List<WeatherData>,
 )
 
-data class weatherlist(
-    var main: main,
-    var weather: List<weatherdata>,
+data class WeatherList(
+    var dt: String,
+    var main: Main,
+    var weather: List<WeatherData>,
     var dt_txt: String,
 )
 
-data class main(
+data class Main(
     var temp: String,
     var temp_min: String,
     var temp_max: String,
+    var humidity: String,
 )
 
-data class weatherdata(
+data class WeatherData(
     var id: Int,
     var main: String,
     var description: String,

@@ -1,6 +1,7 @@
 package com.example.simpleweather.model.network
 
 import com.example.simpleweather.App.Companion.context
+import com.example.simpleweather.model.network.WeatherEndpoint.Companion.baseApiUrl
 import com.example.simpleweather.utils.isOnline
 import okhttp3.Cache
 import okhttp3.CacheControl
@@ -12,15 +13,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
-class Network(private var url: String) {
+class Network {
 
-    fun initRetrofit(): RetrofitEndpoint {
+    fun initRetrofit(): WeatherEndpoint {
         val retrofit = Retrofit.Builder()
             .client(initClient())
-            .baseUrl(url)
+            .baseUrl(baseApiUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        return retrofit.create(RetrofitEndpoint::class.java)
+        return retrofit.create(WeatherEndpoint::class.java)
     }
 
     private fun initClient(): OkHttpClient {
@@ -59,12 +60,11 @@ class Network(private var url: String) {
         return Interceptor { chain ->
             val response = chain.proceed(chain.request())
             val cacheControl = CacheControl.Builder()
-                .maxAge(5, TimeUnit.SECONDS)
+                .maxAge(10, TimeUnit.MINUTES)
                 .build()
             response.newBuilder()
                 .header("Cache-Control", cacheControl.toString())
                 .build()
         }
     }
-
 }

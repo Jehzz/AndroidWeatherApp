@@ -2,13 +2,14 @@
     <string name="app_name">Simple Weather</string>
     <string name="degrees_icon">°</string>
     <string name="enter_zip_code">Enter ZipCode</string>
+    <string name="error_enter_valid_zip">Enter a valid Zip Code</string>
+    <string name="humidity">Humidity %s</string>
     <string name="save">Save</string>
     <string name="settings">Settings</string>
     <string name="settings_units_imperial">Imperial</string>
     <string name="settings_units_metric">Metric</string>
     <string name="todays_forecast">Today\'s Forecast</string>
     <string name="tomorrows_weather">Tomorrow\'s Forecast</string>
-    <string name="weather_icon">weather icon</string>
 
     <string-array name="spinner_options_array">
         <item>@string/settings_units_imperial</item>
