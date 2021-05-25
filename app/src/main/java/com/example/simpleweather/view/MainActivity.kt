@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
         readUserPrefs()
         createObservers()
+        fetchWeatherFromViewModel()
     }
 
     override fun onNewIntent(intent: Intent?) {
