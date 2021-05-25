@@ -32,7 +32,7 @@ class WeatherRepository {
 
     fun fetchWeatherFromApi(zip: String, units: String, key: String) {
         isNetworkLoading.value = true
-        val country = if (isUsZip(zip)) "us" else ""
+        val country = if (isUsZip(zip)) "us" else "ca"
 
         repoScope.launch {
             withContext(this.coroutineContext) {

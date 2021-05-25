@@ -7,7 +7,7 @@ import com.example.simpleweather.App.Companion.context
 
 fun isValidZip(text: String): Boolean {
     val scrubbedZip = text.replace(" ", "").uppercase()
-    return isUsZip(scrubbedZip)
+    return isUsZip(scrubbedZip) || isCanadianZip(scrubbedZip)
 }
 
 fun isUsZip(zip: String): Boolean {
@@ -16,7 +16,7 @@ fun isUsZip(zip: String): Boolean {
 }
 
 fun isCanadianZip(zip: String): Boolean {
-    val canadianZipFormat = Regex("^[ABCEGHJKLMNPRSTVXY]\\d[A-Z] *\\d[A-Z]\\d\$")
+    val canadianZipFormat = Regex("^[ABCEGHJKLMNPRSTVXY]\\d[A-Z]\$")
     return canadianZipFormat.matches(zip)
 }
 
