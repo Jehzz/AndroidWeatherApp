@@ -13,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weather_item_layout.*
 import java.util.*
+import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                 it?.let {
                     tv_city_name.text = it.name
                     tv_description.text = it.weather[0].main
-                    tv_current_temp.text = "${it.main.temp}°"
+                    tv_current_temp.text = "${it.main.temp.toFloat().roundToInt()}°"
                     tv_current_humidity.text = getString(R.string.humidity, it.main.humidity)
                     if ((it.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
                         || ((it.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))

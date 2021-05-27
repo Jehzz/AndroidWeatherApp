@@ -1,8 +1,9 @@
 package com.example.simpleweather.model.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.simpleweather.App.Companion.context
+import com.example.simpleweather.R
 import com.example.simpleweather.model.network.Network
 import com.example.simpleweather.utils.isUsZip
 import kotlinx.coroutines.*
@@ -11,8 +12,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class WeatherRepository {
-
-    private val TAG = "WeatherRepository"
 
     //TODO: Inject Network dependency
     private val network = Network()
@@ -42,17 +41,16 @@ class WeatherRepository {
                             call: Call<CurrentWeatherData>,
                             response: Response<CurrentWeatherData>,
                         ) {
-                            Log.d(TAG, "onResponse: Current Weather: " + response.body().toString())
                             when (response.code()) {
-                                404 -> errorMessage.value = "City Not Found"
                                 200 -> currentWeatherData.value = response.body()
-                                else -> errorMessage.value = "Error"
+                                404 -> errorMessage.value =
+                                    context.getString(R.string.error_city_not_found)
+                                else -> errorMessage.value = context.getString(R.string.error_error)
                             }
                         }
-
                         override fun onFailure(call: Call<CurrentWeatherData>, t: Throwable) {
-                            Log.d(TAG, "onFailure: Current Weather: " + t.printStackTrace())
-                            errorMessage.value = "Weather Server is not reachable"
+                            errorMessage.value =
+                                context.getString(R.string.error_weather_service_unavailable)
                         }
                     })
             }
@@ -63,17 +61,15 @@ class WeatherRepository {
                             call: Call<ForecastWeatherData>,
                             response: Response<ForecastWeatherData>,
                         ) {
-                            Log.d(TAG, "onResponse: Forecast Weather " + response.body().toString())
                             when (response.code()) {
-                                404 -> errorMessage.value = "City Not Found"
                                 200 -> forecastWeatherData.value = response.body()
-                                else -> errorMessage.value = "Error"
+                                404 -> errorMessage.value =
+                                    context.getString(R.string.error_city_not_found)
+                                else -> errorMessage.value = context.getString(R.string.error_error)
                             }
                             isNetworkLoading.value = false
                         }
-
                         override fun onFailure(call: Call<ForecastWeatherData>, t: Throwable) {
-                            Log.d(TAG, "onFailure: Forecast Weather: " + t.printStackTrace())
                             isNetworkLoading.value = false
                         }
                     })

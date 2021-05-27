@@ -9,6 +9,7 @@ import com.example.simpleweather.R
 import com.example.simpleweather.model.repository.WeatherList
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_item_layout.view.*
+import kotlin.math.roundToInt
 
 class ForecastAdapter(private val dataSet: List<WeatherList>) :
     RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
@@ -42,7 +43,7 @@ class ForecastAdapter(private val dataSet: List<WeatherList>) :
             itemView.apply {
                 iv_weather_icon.clearColorFilter()
                 tv_time.text = (data[position].dt_txt).substring(11, 16)
-                tv_temp.text = data[position].main.temp + "°"
+                tv_temp.text = "${data[position].main.temp.toFloat().roundToInt()}°"
 
                 Picasso.get()
                     .load("http://openweathermap.org/img/wn/${data[position].weather[0].icon}@2x.png")

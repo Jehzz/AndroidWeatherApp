@@ -53,6 +53,9 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun readUserPrefs() {
         // TODO: set Units menu to user's preference
-        et_zip.setText(getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null))
+        et_zip.setText(
+            getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+                .getString("userZip", null)
+        )
     }
 }

@@ -10,6 +10,9 @@
     <string name="settings_units_metric">Metric</string>
     <string name="todays_forecast">Today\'s Forecast</string>
     <string name="tomorrows_weather">Tomorrow\'s Forecast</string>
+    <string name="error_city_not_found">City not found</string>
+    <string name="error_error">Error</string>
+    <string name="error_weather_service_unavailable">Weather Service Unavailable</string>
 
     <string-array name="spinner_options_array">
         <item>@string/settings_units_imperial</item>
