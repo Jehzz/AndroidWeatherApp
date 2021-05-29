@@ -55,7 +55,6 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -80,15 +79,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_description"
                     app:layout_constraintEnd_toEndOf="@+id/btn_settings"
-                    app:layout_constraintStart_toEndOf="@+id/tv_current_temp"
-                    app:layout_constraintTop_toTopOf="@+id/tv_current_temp"
+                    app:layout_constraintStart_toEndOf="@+id/tv_description"
                     tools:text="Humidity 60" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cv_today_forecast"
+                android:id="@+id/layout_todays_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,13 +123,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/tv_tomorrows_forecast_label"
+                android:id="@+id/layout_tomorrow_forecast"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cv_today_forecast">
+                app:layout_constraintTop_toBottomOf="@+id/layout_todays_forecast">
 
                 <TextView
                     android:id="@+id/tv_tomorrows_forecast"

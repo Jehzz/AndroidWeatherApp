@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.example.simpleweather.App.Companion.context
 import com.example.simpleweather.R
 import com.example.simpleweather.model.network.Network
-import com.example.simpleweather.utils.isUsZip
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,24 +18,19 @@ class WeatherRepository {
     //TODO: Inject Network dependency
     private val network = Network()
 
-    private val repoJob = SupervisorJob()
-    private val repoScope = CoroutineScope(Dispatchers.IO + repoJob)
+    private val _currentWeatherData = MutableLiveData<CurrentWeatherData>()
+    private val _forecastWeatherData = MutableLiveData<ForecastWeatherData>()
+    private val _isNetworkLoading = MutableLiveData<Boolean>()
+    private val _errorMessage = MutableLiveData<String>()
 
-    private val currentWeatherData = MutableLiveData<CurrentWeatherData>()
-    private val forecastWeatherData = MutableLiveData<ForecastWeatherData>()
-    private val isNetworkLoading = MutableLiveData<Boolean>()
-    private val errorMessage = MutableLiveData<String>()
+    val currentWeatherData: LiveData<CurrentWeatherData> get() = _currentWeatherData
+    val forecastWeatherData: LiveData<ForecastWeatherData> get() = _forecastWeatherData
+    val isNetworkLoading: LiveData<Boolean> get() = _isNetworkLoading
+    val errorMessage: LiveData<String> get() = _errorMessage
 
-    fun getCurrentWeatherData(): LiveData<CurrentWeatherData> = currentWeatherData
-    fun getForecastWeatherData(): LiveData<ForecastWeatherData> = forecastWeatherData
-    fun getIsNetworkLoading(): LiveData<Boolean> = isNetworkLoading
-    fun getErrorMessage(): LiveData<String> = errorMessage
-
-    fun fetchWeatherFromApi(zip: String, units: String, key: String) {
-        isNetworkLoading.value = true
-        val country = if (isUsZip(zip)) "us" else "ca"
-
-        repoScope.launch {
+    fun fetchWeatherFromApi(zip: String, country: String, units: String, key: String) {
+        _isNetworkLoading.value = true
+        CoroutineScope(IO).launch {
             withContext(this.coroutineContext) {
                 network.initRetrofit().getCurrentWeather("$zip,$country", key, units)
                     .enqueue(object : Callback<CurrentWeatherData> {
@@ -42,14 +39,16 @@ class WeatherRepository {
                             response: Response<CurrentWeatherData>,
                         ) {
                             when (response.code()) {
-                                200 -> currentWeatherData.value = response.body()
-                                404 -> errorMessage.value =
+                                200 -> _currentWeatherData.value = response.body()
+                                401 -> _errorMessage.value =
+                                    context.getString(R.string.error_api_key)
+                                404 -> _errorMessage.value =
                                     context.getString(R.string.error_city_not_found)
-                                else -> errorMessage.value = context.getString(R.string.error_error)
+                                else -> _errorMessage.value = response.message()
                             }
                         }
                         override fun onFailure(call: Call<CurrentWeatherData>, t: Throwable) {
-                            errorMessage.value =
+                            _errorMessage.value =
                                 context.getString(R.string.error_weather_service_unavailable)
                         }
                     })
@@ -62,15 +61,19 @@ class WeatherRepository {
                             response: Response<ForecastWeatherData>,
                         ) {
                             when (response.code()) {
-                                200 -> forecastWeatherData.value = response.body()
-                                404 -> errorMessage.value =
+                                200 -> _forecastWeatherData.value = response.body()
+                                401 -> _errorMessage.value =
+                                    context.getString(R.string.error_api_key)
+                                404 -> _errorMessage.value =
                                     context.getString(R.string.error_city_not_found)
-                                else -> errorMessage.value = context.getString(R.string.error_error)
+                                else -> _errorMessage.value = response.message()
                             }
-                            isNetworkLoading.value = false
+                            _isNetworkLoading.value = false
                         }
                         override fun onFailure(call: Call<ForecastWeatherData>, t: Throwable) {
-                            isNetworkLoading.value = false
+                            _isNetworkLoading.value = false
+                            _errorMessage.value =
+                                context.getString(R.string.error_weather_service_unavailable)
                         }
                     })
             }

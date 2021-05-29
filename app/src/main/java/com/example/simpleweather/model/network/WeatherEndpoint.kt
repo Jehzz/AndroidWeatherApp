@@ -10,14 +10,14 @@ interface WeatherEndpoint {
 
     @GET("weather")
     fun getCurrentWeather(
-        @Query("zip") zipCode: String,
+        @Query("zip") location: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String,
     ): Call<CurrentWeatherData>
 
     @GET("forecast")
     fun getForecastWeather(
-        @Query("zip") zipCode: String,
+        @Query("zip") location: String,
         @Query("appid") apiKey: String,
         @Query("units") units: String,
     ): Call<ForecastWeatherData>

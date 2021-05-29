@@ -15,12 +15,9 @@ class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-        readUserPrefs()
-        setOnClickListeners()
         populateUnitsSpinner()
-    }
 
-    private fun setOnClickListeners() {
+        et_zip.setText(getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null))
         btn_save.setOnClickListener {
             if (isValidZip(et_zip.text.toString())) {
                 saveInputs()
@@ -40,6 +37,10 @@ class SettingsActivity : AppCompatActivity() {
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice)
             spinner_units.adapter = adapter
+            spinner_units.setSelection(adapter.getPosition(
+                getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("preferredUnits", null)
+            )
+            )
         }
     }
 
@@ -49,13 +50,5 @@ class SettingsActivity : AppCompatActivity() {
             .putString("userZip", et_zip.text.toString())
             .putString("preferredUnits", spinner_units.selectedItem.toString())
             .apply()
-    }
-
-    private fun readUserPrefs() {
-        // TODO: set Units menu to user's preference
-        et_zip.setText(
-            getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-                .getString("userZip", null)
-        )
     }
 }

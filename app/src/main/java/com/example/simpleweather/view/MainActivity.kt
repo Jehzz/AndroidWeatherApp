@@ -5,28 +5,24 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.example.simpleweather.R
 import com.example.simpleweather.viewmodel.WeatherViewModel
-import com.example.simpleweather.viewmodel.WeatherViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weather_item_layout.*
 import java.util.*
+import javax.inject.Inject
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private val PREFS_NAME = "weather prefs"
+    @Inject
+    lateinit var viewModel: WeatherViewModel
 
+    private val PREFS_NAME = "weather prefs"
     private var userZip: String? = null
     private var preferredUnits: String? = null
-
-    private val weatherViewModel: WeatherViewModel by lazy {
-        ViewModelProvider(this, WeatherViewModelFactory())
-            .get(WeatherViewModel::class.java)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +32,6 @@ class MainActivity : AppCompatActivity() {
             setOnRefreshListener { fetchWeatherFromViewModel() }
             setColorSchemeColors(getColor(R.color.colorCool))
         }
-
         btn_settings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -50,17 +45,13 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         readUserPrefs()
-        userZip?.let {
-            weatherViewModel.fetchWeatherFromApi(it,
-                preferredUnits ?: "Imperial",
-                resources.getString(R.string.api_key))
-        }
+        fetchWeatherFromViewModel()
     }
 
     private fun fetchWeatherFromViewModel() {
         userZip?.let {
-            weatherViewModel.fetchWeatherFromApi(it,
-                preferredUnits ?: "Imperial",
+            viewModel.fetchWeatherFromApi(
+                it, preferredUnits ?: "Imperial",
                 resources.getString(R.string.api_key))
         } ?: run {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -69,8 +60,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createObservers() {
-        weatherViewModel.currentWeatherDataSet
-            .observe(this, {
+        with(viewModel) {
+            currentWeatherDataSet.observe(this@MainActivity, {
                 it?.let {
                     tv_city_name.text = it.name
                     tv_description.text = it.weather[0].main
@@ -89,27 +80,19 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
-
-        weatherViewModel.forecastWeatherDataSet
-            .observe(this, { forecastWeatherData ->
+            forecastWeatherDataSet.observe(this@MainActivity, { forecastWeatherData ->
                 forecastWeatherData?.let { it ->
                     rv_todays_weather.adapter = ForecastAdapter(it.list.take(8))
                     rv_tomorrows_weather.adapter = ForecastAdapter(it.list.drop(8).take(8))
                 }
             })
-
-        weatherViewModel.isNetworkLoading
-            .observe(this, {
-                when (it) {
-                    true -> swipeRefreshLayout.isRefreshing = true
-                    false -> swipeRefreshLayout.isRefreshing = false
-                }
+            isNetworkLoading.observe(this@MainActivity, {
+                swipeRefreshLayout.isRefreshing = it
             })
-
-        weatherViewModel.networkError
-            .observe(this, {
+            networkError.observe(this@MainActivity, {
                 Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
             })
+        }
     }
 
     private fun readUserPrefs() {

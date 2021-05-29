@@ -1,5 +1,6 @@
 package com.example.simpleweather.view
 
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import com.example.simpleweather.R
 import com.example.simpleweather.model.repository.WeatherList
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.weather_item_layout.view.*
+import java.util.*
 import kotlin.math.roundToInt
 
 class ForecastAdapter(private val dataSet: List<WeatherList>) :
@@ -26,7 +28,7 @@ class ForecastAdapter(private val dataSet: List<WeatherList>) :
         holder.onBind(dataSet, position)
     }
 
-    class CustomViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView) {
+    class CustomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun onBind(data: List<WeatherList>, position: Int) {
             //TODO: fix this, is called on each item, grossly inefficient
@@ -41,13 +43,20 @@ class ForecastAdapter(private val dataSet: List<WeatherList>) :
             }
 
             itemView.apply {
-                iv_weather_icon.clearColorFilter()
-                tv_time.text = (data[position].dt_txt).substring(11, 16)
-                tv_temp.text = "${data[position].main.temp.toFloat().roundToInt()}°"
-
-                Picasso.get()
-                    .load("http://openweathermap.org/img/wn/${data[position].weather[0].icon}@2x.png")
-                    .into(this.iv_weather_icon)
+                tv_temp.text = context.getString(R.string.degress,
+                    data[position].main.temp.toFloat().roundToInt())
+                tv_time.text = DateFormat.format(
+                    "H:00",
+                    Calendar.getInstance(Locale.ENGLISH).apply {
+                        timeInMillis = data[position].dt.toLong() * 1000L
+                    }
+                )
+                iv_weather_icon.apply {
+                    clearColorFilter()
+                    Picasso.get()
+                        .load("http://openweathermap.org/img/wn/${data[position].weather[0].icon}@2x.png")
+                        .into(this)
+                }
 
                 if (position == coldestIndex) {
                     tv_temp.setTextColor(getColor(itemView.context, R.color.colorCool))
