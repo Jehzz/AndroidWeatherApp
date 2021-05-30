@@ -1,2 +1,9 @@
 # AndroidWeatherApp
-A simple weather app that pulls weather data from OpenWeather's free 3-Hour API, using Retrofit for network and API calls
+A simple open source weather app written entirely in Kotlin. Weather information provided by OpenWeather's free 5Day/3-Hour API
+
+Support for US and Canada, weather display in Imperial or Metric.
+
+MVVM architecture
+LiveData and Coroutines
+Retrofit + OkHTTP
+Automatic caching for offline use and reducing redundant network calls
