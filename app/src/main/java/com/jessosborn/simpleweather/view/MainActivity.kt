@@ -1,12 +1,12 @@
-package com.example.simpleweather.view
+package com.jessosborn.simpleweather.view
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.example.simpleweather.R
-import com.example.simpleweather.viewmodel.WeatherViewModel
+import com.jessosborn.simpleweather.R
+import com.jessosborn.simpleweather.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.weather_item_layout.*
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         swipeRefreshLayout.apply {
             setOnRefreshListener { fetchWeatherFromViewModel() }
-            setColorSchemeColors(getColor(R.color.colorCool))
+            setColorSchemeColors(getColor(R.color.blueLight))
         }
         btn_settings.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
@@ -67,15 +67,16 @@ class MainActivity : AppCompatActivity() {
                     tv_description.text = it.weather[0].main
                     tv_current_temp.text = "${it.main.temp.toFloat().roundToInt()}°"
                     tv_current_humidity.text = getString(R.string.humidity, it.main.humidity)
+                    tv_current_wind.text = "Wind speed ${it.wind.speed}"
                     if ((it.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
                         || ((it.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))
                     ) {
                         layout_today_weather.setBackgroundColor(
-                            ContextCompat.getColor(applicationContext, R.color.colorCool)
+                            ContextCompat.getColor(applicationContext, R.color.blueLight)
                         )
                     } else {
                         layout_today_weather.setBackgroundColor(
-                            ContextCompat.getColor(applicationContext, R.color.colorWarm)
+                            ContextCompat.getColor(applicationContext, R.color.orange)
                         )
                     }
                 }

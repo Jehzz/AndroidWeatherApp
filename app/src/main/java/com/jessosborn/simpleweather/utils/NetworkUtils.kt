@@ -1,9 +1,9 @@
-package com.example.simpleweather.utils
+package com.jessosborn.simpleweather.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.example.simpleweather.App.Companion.context
+import com.jessosborn.simpleweather.App.Companion.context
 
 fun isOnline(): Boolean {
     val connectivityManager =

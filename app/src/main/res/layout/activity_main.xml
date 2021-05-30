@@ -20,7 +20,7 @@
                 android:id="@+id/layout_today_weather"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorCool"
+                android:background="@color/blueLight"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -52,14 +52,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_current_temp"
+                    app:layout_constraintStart_toStartOf="@+id/tv_current_temp"
                     app:layout_constraintTop_toBottomOf="@+id/tv_current_temp"
-                    tools:text="description" />
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:text="cloudy" />
 
                 <TextView
                     android:id="@+id/tv_current_temp"
@@ -69,7 +69,7 @@
                     android:layout_marginTop="8dp"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     android:textSize="36sp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_current_wind"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_city_name"
                     tools:text="80" />
@@ -80,9 +80,19 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_description"
-                    app:layout_constraintEnd_toEndOf="@+id/btn_settings"
-                    app:layout_constraintStart_toEndOf="@+id/tv_description"
+                    app:layout_constraintStart_toStartOf="@+id/tv_current_wind"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_current_wind"
                     tools:text="Humidity 60" />
+
+                <TextView
+                    android:id="@+id/tv_current_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                    app:layout_constraintEnd_toEndOf="@+id/tv_city_name"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_city_name"
+                    tools:text="Wind: 6mph" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

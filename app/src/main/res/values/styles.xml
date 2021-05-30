@@ -23,7 +23,7 @@
     </style>
 
     <style name="BlueThemeOverlay">
-        <item name="colorPrimary">@color/colorCool</item>
+        <item name="colorPrimary">@color/blueLight</item>
     </style>
 
     <style name="ButtonThemeOverlay">

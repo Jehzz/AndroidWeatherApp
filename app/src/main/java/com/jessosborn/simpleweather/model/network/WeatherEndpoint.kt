@@ -1,7 +1,7 @@
-package com.example.simpleweather.model.network
+package com.jessosborn.simpleweather.model.network
 
-import com.example.simpleweather.model.repository.CurrentWeatherData
-import com.example.simpleweather.model.repository.ForecastWeatherData
+import com.jessosborn.simpleweather.model.repository.CurrentWeatherData
+import com.jessosborn.simpleweather.model.repository.ForecastWeatherData
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

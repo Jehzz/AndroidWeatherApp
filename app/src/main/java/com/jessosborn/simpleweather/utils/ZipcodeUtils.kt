@@ -1,4 +1,4 @@
-package com.example.simpleweather.utils
+package com.jessosborn.simpleweather.utils
 
 fun isValidZip(text: String): Boolean {
     val scrubbedZip = text.replace(" ", "").uppercase()

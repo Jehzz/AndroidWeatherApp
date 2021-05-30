@@ -1,10 +1,10 @@
-package com.example.simpleweather.model.repository
+package com.jessosborn.simpleweather.model.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.simpleweather.App.Companion.context
-import com.example.simpleweather.R
-import com.example.simpleweather.model.network.Network
+import com.jessosborn.simpleweather.App.Companion.context
+import com.jessosborn.simpleweather.R
+import com.jessosborn.simpleweather.model.network.Network
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch

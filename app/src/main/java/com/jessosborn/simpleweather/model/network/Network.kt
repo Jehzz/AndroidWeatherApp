@@ -1,8 +1,8 @@
-package com.example.simpleweather.model.network
+package com.jessosborn.simpleweather.model.network
 
-import com.example.simpleweather.App.Companion.context
-import com.example.simpleweather.model.network.WeatherEndpoint.Companion.baseApiUrl
-import com.example.simpleweather.utils.isOnline
+import com.jessosborn.simpleweather.App.Companion.context
+import com.jessosborn.simpleweather.model.network.WeatherEndpoint.Companion.baseApiUrl
+import com.jessosborn.simpleweather.utils.isOnline
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
