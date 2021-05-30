@@ -3,7 +3,7 @@ A simple open source weather app written entirely in Kotlin. Weather information
 
 Support for US and Canada, weather display in Imperial or Metric.
 
-MVVM architecture
-LiveData and Coroutines
-Retrofit + OkHTTP
-Automatic caching for offline use and reducing redundant network calls
+- MVVM architecture.
+- LiveData and Coroutines.
+- Retrofit + OkHTTP.
+- Automatic caching for offline use and reducing redundant network calls.
