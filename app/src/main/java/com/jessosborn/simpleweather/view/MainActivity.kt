@@ -65,11 +65,11 @@ class MainActivity : AppCompatActivity() {
                 it?.let {
                     tv_city_name.text = it.name
                     tv_description.text = it.weather[0].main
-                    tv_current_temp.text = "${it.main.temp.toFloat().roundToInt()}°"
+                    tv_current_temp.text = "${it.main.temp.roundToInt()}°"
                     tv_current_humidity.text = getString(R.string.humidity, it.main.humidity)
                     tv_current_wind.text = "Wind speed ${it.wind.speed}"
-                    if ((it.main.temp.toFloat() < 60.0) && (preferredUnits.equals("Imperial"))
-                        || ((it.main.temp.toFloat() < 15.6) && (preferredUnits.equals("Metric")))
+                    if ((it.main.temp < 60.0) && (preferredUnits.equals("Imperial"))
+                        || ((it.main.temp < 15.6) && (preferredUnits.equals("Metric")))
                     ) {
                         layout_today_weather.setBackgroundColor(
                             ContextCompat.getColor(applicationContext, R.color.blueLight)

@@ -12,11 +12,11 @@ import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class WeatherRepository {
-
-    //TODO: Inject Network dependency
-    private val network = Network()
+class WeatherRepository @Inject constructor(
+    private val network: Network
+) {
 
     private val _currentWeatherData = MutableLiveData<CurrentWeatherData>()
     private val _forecastWeatherData = MutableLiveData<ForecastWeatherData>()

@@ -12,8 +12,9 @@ import kotlinx.android.synthetic.main.weather_item_layout.view.*
 import java.util.*
 import kotlin.math.roundToInt
 
-class ForecastAdapter(private val dataSet: List<WeatherList>) :
-    RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
+class ForecastAdapter(
+    private val dataSet: List<WeatherList>,
+) : RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder =
         CustomViewHolder(

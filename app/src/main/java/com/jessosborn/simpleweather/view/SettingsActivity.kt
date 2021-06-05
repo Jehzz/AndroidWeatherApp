@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
 
         et_zip.setText(getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null))
         btn_save.setOnClickListener {
-            if (isValidZip(et_zip.text.toString())) {
+            if ((et_zip.text.toString().isValidZip())) {
                 saveInputs()
                 startActivity(Intent(this, MainActivity::class.java))
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)

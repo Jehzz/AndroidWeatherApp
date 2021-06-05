@@ -6,20 +6,24 @@ import com.jessosborn.simpleweather.model.repository.CurrentWeatherData
 import com.jessosborn.simpleweather.model.repository.ForecastWeatherData
 import com.jessosborn.simpleweather.model.repository.WeatherRepository
 import com.jessosborn.simpleweather.utils.getCountryFromZip
+import com.jessosborn.simpleweather.utils.isUsZip
 import javax.inject.Inject
 
-class WeatherViewModel @Inject constructor() : ViewModel() {
+class WeatherViewModel @Inject constructor(
+    private val weatherRepo : WeatherRepository
+) : ViewModel() {
 
-    //TODO: Inject Repo dependency
-    private val weatherRepo = WeatherRepository()
 
     val currentWeatherDataSet: LiveData<CurrentWeatherData> = weatherRepo.currentWeatherData
     val forecastWeatherDataSet: LiveData<ForecastWeatherData> = weatherRepo.forecastWeatherData
     val isNetworkLoading: LiveData<Boolean> = weatherRepo.isNetworkLoading
     val networkError: LiveData<String> = weatherRepo.errorMessage
 
-    fun fetchWeatherFromApi(zip: String, units: String, key: String) {
-        val country = getCountryFromZip(zip)
-        weatherRepo.fetchWeatherFromApi(zip, country, units, key)
+    fun fetchWeatherFromApi(
+        zip: String,
+        units: String,
+        key: String
+    ) {
+        weatherRepo.fetchWeatherFromApi(zip, getCountryFromZip(zip), units, key)
     }
 }
