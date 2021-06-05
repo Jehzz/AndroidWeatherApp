@@ -12,8 +12,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class Network {
+class Network @Inject constructor(){
 
     fun initRetrofit(): WeatherEndpoint {
         val retrofit = Retrofit.Builder()
