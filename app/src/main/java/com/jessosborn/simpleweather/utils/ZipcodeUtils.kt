@@ -20,7 +20,7 @@ fun isCanadianZip(zip: String): Boolean {
 
 fun isUkZip (zip: String): Boolean {
     val scrubbedZip = zip.replace(" ", "").uppercase()
-    val ukZipFormat = Regex("^[A-Z]{2}\\d")
+    val ukZipFormat = Regex("^[A-Z]{1,2}[0-9R][0-9A-Z]?\$")
     return ukZipFormat.matches(scrubbedZip)
 }
 
