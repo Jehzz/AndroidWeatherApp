@@ -10,9 +10,9 @@ fun isOnline(): Boolean {
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
     connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)?.let {
-        if (it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-            || (it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI))
-            || (it.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
+        if (it.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+            (it.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) ||
+            (it.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
         ) {
             return true
         }

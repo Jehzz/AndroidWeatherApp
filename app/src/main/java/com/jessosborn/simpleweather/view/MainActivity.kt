@@ -51,8 +51,9 @@ class MainActivity : AppCompatActivity() {
     private fun fetchWeatherFromViewModel() {
         userZip?.let {
             viewModel.fetchWeatherFromApi(
-                it, preferredUnits ?: "Imperial",
-                resources.getString(R.string.api_key))
+                zip = it,
+                units = preferredUnits ?: "Imperial",
+                key = resources.getString(R.string.api_key))
         } ?: run {
             startActivity(Intent(this, SettingsActivity::class.java))
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -65,9 +66,9 @@ class MainActivity : AppCompatActivity() {
                 it?.let {
                     tv_city_name.text = it.name
                     tv_description.text = it.weather[0].main
-                    tv_current_temp.text = "${it.main.temp.roundToInt()}°"
+                    tv_current_temp.text = getString(R.string.degrees, it.main.temp.roundToInt())
                     tv_current_humidity.text = getString(R.string.humidity, it.main.humidity)
-                    tv_current_wind.text = "Wind speed ${it.wind.speed}"
+                    tv_current_wind.text = getString(R.string.wind_speed, it.wind.speed)
                     if ((it.main.temp < 60.0) && (preferredUnits.equals("Imperial"))
                         || ((it.main.temp < 15.6) && (preferredUnits.equals("Metric")))
                     ) {

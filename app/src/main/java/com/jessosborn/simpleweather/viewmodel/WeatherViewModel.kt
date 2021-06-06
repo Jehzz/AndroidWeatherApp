@@ -9,7 +9,7 @@ import com.jessosborn.simpleweather.utils.getCountryFromZip
 import javax.inject.Inject
 
 class WeatherViewModel @Inject constructor(
-    private val weatherRepo : WeatherRepository
+    private val weatherRepo: WeatherRepository,
 ) : ViewModel() {
 
     val currentWeatherDataSet: LiveData<CurrentWeatherData> = weatherRepo.currentWeatherData

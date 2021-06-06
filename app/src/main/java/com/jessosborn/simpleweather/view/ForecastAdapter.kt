@@ -45,7 +45,7 @@ class ForecastAdapter(
 
             itemView.apply {
                 tv_temp.text = context.getString(
-                    R.string.degress, data[position].main.temp.roundToInt()
+                    R.string.degrees, data[position].main.temp.roundToInt()
                 )
                 tv_time.text = DateFormat.format(
                     if (DateFormat.is24HourFormat(context)) "H:00" else "h:00",

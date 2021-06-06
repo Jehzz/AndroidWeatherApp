@@ -7,29 +7,25 @@ fun String.isValidZip(): Boolean {
 }
 
 fun isUsZip(zip: String): Boolean {
-    val scrubbedZip = zip.replace(" ", "").uppercase()
     val americanZipFormat = Regex("^[0-9]{5}\$")
-    return americanZipFormat.matches(scrubbedZip)
+    return americanZipFormat.matches(zip.uppercase())
 }
 
 fun isCanadianZip(zip: String): Boolean {
-    val scrubbedZip = zip.replace(" ", "").uppercase()
     val canadianZipFormat = Regex("^[ABCEGHJKLMNPRSTVXY]\\d[A-Z]\$")
-    return canadianZipFormat.matches(scrubbedZip)
+    return canadianZipFormat.matches(zip.uppercase())
 }
 
 fun isUkZip (zip: String): Boolean {
-    val scrubbedZip = zip.replace(" ", "").uppercase()
     val ukZipFormat = Regex("^[A-Z]{1,2}[0-9R][0-9A-Z]?\$")
-    return ukZipFormat.matches(scrubbedZip)
+    return ukZipFormat.matches(zip.uppercase())
 }
 
 fun getCountryFromZip(zip: String): String {
-    val scrubbedZip = zip.replace(" ", "").uppercase()
-    when {
-        isUsZip(scrubbedZip) -> return "us"
-        isCanadianZip(scrubbedZip) -> return "ca"
-        isUkZip(scrubbedZip) -> return "gb"
-        else -> return "NULL"
+    return when {
+        isUsZip(zip.uppercase()) -> "us"
+        isCanadianZip(zip.uppercase()) -> "ca"
+        isUkZip(zip.uppercase()) -> "gb"
+        else -> "NULL"
     }
 }
