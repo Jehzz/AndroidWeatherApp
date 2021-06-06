@@ -28,7 +28,12 @@ class WeatherRepository @Inject constructor(
     val isNetworkLoading: LiveData<Boolean> get() = _isNetworkLoading
     val errorMessage: LiveData<String> get() = _errorMessage
 
-    fun fetchWeatherFromApi(zip: String, country: String, units: String, key: String) {
+    fun fetchWeatherFromApi(
+        zip: String,
+        country: String,
+        units: String,
+        key: String
+    ) {
         _isNetworkLoading.value = true
         CoroutineScope(IO).launch {
             withContext(this.coroutineContext) {

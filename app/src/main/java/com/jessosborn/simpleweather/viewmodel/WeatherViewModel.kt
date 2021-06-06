@@ -6,13 +6,11 @@ import com.jessosborn.simpleweather.model.repository.CurrentWeatherData
 import com.jessosborn.simpleweather.model.repository.ForecastWeatherData
 import com.jessosborn.simpleweather.model.repository.WeatherRepository
 import com.jessosborn.simpleweather.utils.getCountryFromZip
-import com.jessosborn.simpleweather.utils.isUsZip
 import javax.inject.Inject
 
 class WeatherViewModel @Inject constructor(
     private val weatherRepo : WeatherRepository
 ) : ViewModel() {
-
 
     val currentWeatherDataSet: LiveData<CurrentWeatherData> = weatherRepo.currentWeatherData
     val forecastWeatherDataSet: LiveData<ForecastWeatherData> = weatherRepo.forecastWeatherData

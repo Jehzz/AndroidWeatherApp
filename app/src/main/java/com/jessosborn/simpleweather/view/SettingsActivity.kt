@@ -19,7 +19,7 @@ class SettingsActivity : AppCompatActivity() {
 
         et_zip.setText(getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null))
         btn_save.setOnClickListener {
-            if ((et_zip.text.toString().isValidZip())) {
+            if (et_zip.text.toString().isValidZip()) {
                 saveInputs()
                 startActivity(Intent(this, MainActivity::class.java))
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -39,8 +39,7 @@ class SettingsActivity : AppCompatActivity() {
             spinner_units.adapter = adapter
             spinner_units.setSelection(adapter.getPosition(
                 getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("preferredUnits", null)
-            )
-            )
+            ))
         }
     }
 
