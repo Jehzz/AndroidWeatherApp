@@ -32,7 +32,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun populateUnitsSpinner() {
         ArrayAdapter.createFromResource(
             this,
-            R.array.spinner_options_array,
+            R.array.spinner_units_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice)

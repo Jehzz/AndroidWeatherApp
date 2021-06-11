@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">Simple Weather</string>
     <string name="degrees">%d°</string>
-    <string name="degrees_icon">°</string>
     <string name="error_api_key">Expired or missing API key</string>
     <string name="error_city_not_found">City not found</string>
     <string name="error_enter_valid_zip">Enter a valid Zip Code</string>
-    <string name="error_error">Error</string>
     <string name="error_weather_service_unavailable">Weather Service Unavailable</string>
     <string name="enter_zip_code">Enter ZipCode</string>
     <string name="humidity">Humidity %s</string>
@@ -18,7 +16,7 @@
     <string name="units_metric" translatable="false">Metric</string>
     <string name="wind_speed">Wind speed %s</string>
 
-    <string-array name="spinner_options_array">
+    <string-array name="spinner_units_array">
         <item>@string/units_imperial</item>
         <item>@string/units_metric</item>
     </string-array>
