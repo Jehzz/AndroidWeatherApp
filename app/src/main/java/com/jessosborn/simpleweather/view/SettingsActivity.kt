@@ -5,26 +5,32 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.jessosborn.simpleweather.R
+import com.jessosborn.simpleweather.databinding.ActivitySettingsBinding
 import com.jessosborn.simpleweather.utils.isValidZip
-import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
     private val PREFS_NAME = "weather prefs"
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         populateUnitsSpinner()
 
-        et_zip.setText(getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null))
-        btn_save.setOnClickListener {
-            if (et_zip.text.toString().isValidZip()) {
-                saveInputs()
-                startActivity(Intent(this, MainActivity::class.java))
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            } else {
-                et_zip.error = getString(R.string.error_enter_valid_zip)
+        binding.apply {
+            etZip.setText(
+                getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null)
+            )
+            btnSave.setOnClickListener {
+                if (etZip.text.toString().isValidZip()) {
+                    saveInputs()
+                    startActivity(Intent(this@SettingsActivity, MainActivity::class.java))
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                } else {
+                    etZip.error = getString(R.string.error_enter_valid_zip)
+                }
             }
         }
     }
@@ -36,18 +42,21 @@ class SettingsActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice)
-            spinner_units.adapter = adapter
-            spinner_units.setSelection(adapter.getPosition(
-                getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("preferredUnits", null)
-            ))
+            binding.apply {
+                spinnerUnits.adapter = adapter
+                spinnerUnits.setSelection(adapter.getPosition(
+                    getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
+                        .getString("preferredUnits", null)
+                ))
+            }
         }
     }
 
     private fun saveInputs() {
         getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
             .edit()
-            .putString("userZip", et_zip.text.toString())
-            .putString("preferredUnits", spinner_units.selectedItem.toString())
+            .putString("userZip", binding.etZip.text.toString())
+            .putString("preferredUnits", binding.spinnerUnits.selectedItem.toString())
             .apply()
     }
 }
