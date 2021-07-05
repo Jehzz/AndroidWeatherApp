@@ -3,6 +3,7 @@ package com.jessosborn.simpleweather.view
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.jessosborn.simpleweather.App.Companion.context
 import com.jessosborn.simpleweather.R
@@ -16,11 +17,25 @@ class ForecastAdapter(
     private val dataSet: List<WeatherList>,
 ) : RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
 
+    var coldestIndex = 0
+    var hottestIndex = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
+        findExtremeTempIndices()
         return CustomViewHolder(
             WeatherItemLayoutBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false)
         )
+    }
+
+    fun findExtremeTempIndices() {
+        for (i in dataSet.indices) {
+            if (dataSet[i].main.temp > dataSet[hottestIndex].main.temp) {
+                hottestIndex = i
+            } else if (dataSet[i].main.temp < dataSet[coldestIndex].main.temp) {
+                coldestIndex = i
+            }
+        }
     }
 
     override fun getItemCount(): Int = dataSet.size
@@ -37,22 +52,21 @@ class ForecastAdapter(
                 }
             )
             ivWeatherIcon.apply {
-                // clearColorFilter()
                 Picasso.get()
                     .load("http://openweathermap.org/img/wn/${dataSet[position].weather[0].icon}@2x.png")
                     .into(ivWeatherIcon)
             }
-            /*
-            if (dataSet[position].main.temp == coldestIndex) {
+
+            if (position == coldestIndex) {
                 tvTemp.setTextColor(getColor(context, R.color.blueLight))
                 tvTime.setTextColor(getColor(context, R.color.blueLight))
                 ivWeatherIcon.setColorFilter(getColor(context, R.color.blueLight))
-            } else if (dataSet[position] == hottestIndex) {
+            } else if (position == hottestIndex) {
                 tvTemp.setTextColor(getColor(context, R.color.orange))
                 tvTime.setTextColor(getColor(context, R.color.orange))
                 ivWeatherIcon.setColorFilter(getColor(context, R.color.orange))
             }
-            */
+
         }
     }
 
