@@ -6,28 +6,27 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.jessosborn.simpleweather.R
 import com.jessosborn.simpleweather.databinding.ActivitySettingsBinding
+import com.jessosborn.simpleweather.utils.DataStoreUtil
 import com.jessosborn.simpleweather.utils.isValidZip
+import kotlinx.coroutines.runBlocking
 
 class SettingsActivity : AppCompatActivity() {
 
-    private val PREFS_NAME = "weather prefs"
     private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        populateUnitsSpinner()
-
+        populateSpinnerArray()
         binding.apply {
             etZip.setText(
-                getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null)
+                runBlocking { DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_ZIP) }
             )
             btnSave.setOnClickListener {
                 if (etZip.text.toString().isValidZip()) {
                     saveInputs()
-                    startActivity(Intent(this@SettingsActivity, MainActivity::class.java))
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                    navigateToMain()
                 } else {
                     etZip.error = getString(R.string.error_enter_valid_zip)
                 }
@@ -35,28 +34,37 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    private fun populateUnitsSpinner() {
+    private fun populateSpinnerArray() {
         ArrayAdapter.createFromResource(
-            this,
+            this@SettingsActivity,
             R.array.spinner_units_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             adapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice)
-            binding.apply {
-                spinnerUnits.adapter = adapter
-                spinnerUnits.setSelection(adapter.getPosition(
-                    getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-                        .getString("preferredUnits", null)
+            apply {
+                binding.spinnerUnits.adapter = adapter
+                binding.spinnerUnits.setSelection(adapter.getPosition(
+                    runBlocking {
+                        DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_UNITS)
+                    }
                 ))
             }
         }
     }
 
+    private fun navigateToMain() {
+        startActivity(Intent(this@SettingsActivity, MainActivity::class.java))
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
     private fun saveInputs() {
-        getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-            .edit()
-            .putString("userZip", binding.etZip.text.toString())
-            .putString("preferredUnits", binding.spinnerUnits.selectedItem.toString())
-            .apply()
+        runBlocking {
+            DataStoreUtil.apply {
+                saveString(applicationContext,
+                    USER_UNITS,
+                    binding.spinnerUnits.selectedItem.toString())
+                saveString(applicationContext, USER_ZIP, binding.etZip.text.toString())
+            }
+        }
     }
 }

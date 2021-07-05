@@ -17,11 +17,7 @@ class WeatherViewModel @Inject constructor(
     val isNetworkLoading: LiveData<Boolean> = weatherRepo.isNetworkLoading
     val networkError: LiveData<String> = weatherRepo.errorMessage
 
-    fun fetchWeatherFromApi(
-        zip: String,
-        units: String,
-        key: String
-    ) {
+    fun fetchWeatherFromApi(zip: String, units: String, key: String) {
         weatherRepo.fetchWeatherFromApi(zip, getCountryFromZip(zip), units, key)
     }
 }

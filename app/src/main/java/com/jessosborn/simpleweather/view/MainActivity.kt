@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.jessosborn.simpleweather.R
 import com.jessosborn.simpleweather.databinding.ActivityMainBinding
+import com.jessosborn.simpleweather.utils.DataStoreUtil
 import com.jessosborn.simpleweather.viewmodel.WeatherViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.runBlocking
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
@@ -21,7 +23,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val PREFS_NAME = "weather prefs"
     private var userZip: String? = null
     private var preferredUnits: String? = null
 
@@ -31,24 +32,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.apply {
             swipeRefreshLayout.apply {
-                setOnRefreshListener { fetchWeatherFromViewModel() }
+                setOnRefreshListener { refresh() }
                 setColorSchemeColors(getColor(R.color.blueLight))
             }
             btnSettings.setOnClickListener {
-                startActivity(Intent(this@MainActivity, SettingsActivity::class.java))
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                navigateToSettings()
             }
         }
-
-        readUserPrefs()
         createObservers()
-        fetchWeatherFromViewModel()
+        refresh()
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        readUserPrefs()
-        fetchWeatherFromViewModel()
+        refresh()
+    }
+
+    private fun refresh() {
+        runBlocking {
+            readDataStore()
+            fetchWeatherFromViewModel()
+        }
+    }
+
+    private suspend fun readDataStore() {
+        preferredUnits = DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_UNITS)
+        userZip = DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_ZIP)
     }
 
     private fun fetchWeatherFromViewModel() {
@@ -58,9 +67,13 @@ class MainActivity : AppCompatActivity() {
                 units = preferredUnits ?: "Imperial",
                 key = resources.getString(R.string.api_key))
         } ?: run {
-            startActivity(Intent(this, SettingsActivity::class.java))
-            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            navigateToSettings()
         }
+    }
+
+    private fun navigateToSettings() {
+        startActivity(Intent(this, SettingsActivity::class.java))
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
     private fun createObservers() {
@@ -76,11 +89,11 @@ class MainActivity : AppCompatActivity() {
                         if ((it.main.temp < 60.0) && (preferredUnits.equals("Imperial"))
                             || ((it.main.temp < 15.6) && (preferredUnits.equals("Metric")))
                         ) {
-                            this.layoutTodayWeather.setBackgroundColor(
+                            layoutTodayWeather.setBackgroundColor(
                                 ContextCompat.getColor(applicationContext, R.color.blueLight)
                             )
                         } else {
-                            this.layoutTodayWeather.setBackgroundColor(
+                            layoutTodayWeather.setBackgroundColor(
                                 ContextCompat.getColor(applicationContext, R.color.orange)
                             )
                         }
@@ -105,11 +118,5 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
             })
         }
-    }
-
-    private fun readUserPrefs() {
-        userZip = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("userZip", null)
-        preferredUnits =
-            getSharedPreferences(PREFS_NAME, MODE_PRIVATE).getString("preferredUnits", null)
     }
 }
