@@ -60,10 +60,12 @@ class SettingsActivity : AppCompatActivity() {
     private fun saveInputs() {
         runBlocking {
             DataStoreUtil.apply {
-                saveString(applicationContext,
-                    USER_UNITS,
-                    binding.spinnerUnits.selectedItem.toString())
-                saveString(applicationContext, USER_ZIP, binding.etZip.text.toString())
+                saveString(
+                    applicationContext, USER_UNITS, binding.spinnerUnits.selectedItem.toString()
+                )
+                saveString(
+                    applicationContext, USER_ZIP, binding.etZip.text.toString()
+                )
             }
         }
     }

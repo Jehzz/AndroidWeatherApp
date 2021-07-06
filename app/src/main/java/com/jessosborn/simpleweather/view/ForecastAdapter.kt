@@ -28,7 +28,7 @@ class ForecastAdapter(
         )
     }
 
-    fun findExtremeTempIndices() {
+    private fun findExtremeTempIndices() {
         for (i in dataSet.indices) {
             if (dataSet[i].main.temp > dataSet[hottestIndex].main.temp) {
                 hottestIndex = i
@@ -53,7 +53,7 @@ class ForecastAdapter(
             )
             ivWeatherIcon.apply {
                 Picasso.get()
-                    .load("http://openweathermap.org/img/wn/${dataSet[position].weather[0].icon}@2x.png")
+                    .load("https://openweathermap.org/img/wn/${dataSet[position].weather[0].icon}@2x.png")
                     .into(ivWeatherIcon)
             }
 
