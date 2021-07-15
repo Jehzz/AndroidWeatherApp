@@ -2,8 +2,8 @@ package com.jessosborn.simpleweather.utils
 
 fun String.isValidZip(): Boolean {
     return isUsZip(this) ||
-            isCanadianZip(this) ||
-            isUkZip(this)
+        isCanadianZip(this) ||
+        isUkZip(this)
 }
 
 fun isUsZip(zip: String): Boolean {
