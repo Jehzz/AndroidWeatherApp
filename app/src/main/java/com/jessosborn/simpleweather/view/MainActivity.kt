@@ -13,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 import javax.inject.Inject
 import kotlin.math.roundToInt
 
@@ -53,7 +52,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.fetchWeatherFromApi(
                     zip = it,
                     units = preferredUnits ?: "Imperial",
-                    key = resources.getString(R.string.api_key))
+                    key = resources.getString(R.string.api_key)
+                )
             } ?: run {
                 navigateToSettings()
             }
@@ -67,43 +67,56 @@ class MainActivity : AppCompatActivity() {
 
     private fun createObservers() {
         with(viewModel) {
-            currentWeatherDataSet.observe(this@MainActivity, {
-                it?.let {
-                    binding.todaysWeather.apply {
-                        tvCityName.text = it.name
-                        tvDescription.text = it.weather[0].main
-                        tvCurrentTemp.text = getString(R.string.degrees, it.main.temp.roundToInt())
-                        tvCurrentHumidity.text = getString(R.string.humidity, it.main.humidity)
-                        tvCurrentWind.text = getString(R.string.wind_speed, it.wind.speed)
+            currentWeatherDataSet.observe(
+                this@MainActivity,
+                {
+                    it?.let {
+                        binding.todaysWeather.apply {
+                            tvCityName.text = it.name
+                            tvDescription.text = it.weather[0].main
+                            tvCurrentTemp.text =
+                                getString(R.string.degrees, it.main.temp.roundToInt())
+                            tvCurrentHumidity.text = getString(R.string.humidity, it.main.humidity)
+                            tvCurrentWind.text = getString(R.string.wind_speed, it.wind.speed)
 
-                        if ((it.main.temp < 60.0) && (preferredUnits.equals("Imperial"))
-                            || ((it.main.temp < 15.6) && (preferredUnits.equals("Metric")))
-                        ) {
-                            root.setBackgroundColor(
-                                ContextCompat.getColor(applicationContext, R.color.blueLight)
-                            )
-                        } else {
-                            root.setBackgroundColor(
-                                ContextCompat.getColor(applicationContext, R.color.orange)
-                            )
+                            if ((it.main.temp < 60.0) && (preferredUnits.equals("Imperial")) ||
+                                ((it.main.temp < 15.6) && (preferredUnits.equals("Metric")))
+                            ) {
+                                root.setBackgroundColor(
+                                    ContextCompat.getColor(applicationContext, R.color.blueLight)
+                                )
+                            } else {
+                                root.setBackgroundColor(
+                                    ContextCompat.getColor(applicationContext, R.color.orange)
+                                )
+                            }
                         }
                     }
                 }
-            })
-            forecastWeatherDataSet.observe(this@MainActivity, { forecastWeatherData ->
-                forecastWeatherData?.let { it ->
-                    binding.todaysForecast.rvTodaysWeather.adapter =
-                        ForecastAdapter(it.list.take(8))
-                    binding.tomorrowForecast.rvTomorrowsWeather.adapter =
-                        ForecastAdapter(it.list.drop(8).take(8))
+            )
+            forecastWeatherDataSet.observe(
+                this@MainActivity,
+                { forecastWeatherData ->
+                    forecastWeatherData?.let { it ->
+                        binding.todaysForecast.rvTodaysWeather.adapter =
+                            ForecastAdapter(it.list.take(8))
+                        binding.tomorrowForecast.rvTomorrowsWeather.adapter =
+                            ForecastAdapter(it.list.drop(8).take(8))
+                    }
                 }
-            })
-            isNetworkLoading.observe(this@MainActivity, {
-                binding.swipeRefreshLayout.isRefreshing = it
-            })
-            networkError.observe(this@MainActivity, {
-                Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
-            })
+            )
+            isNetworkLoading.observe(
+                this@MainActivity,
+                {
+                    binding.swipeRefreshLayout.isRefreshing = it
+                }
+            )
+            networkError.observe(
+                this@MainActivity,
+                {
+                    Toast.makeText(this@MainActivity, it, Toast.LENGTH_LONG).show()
+                }
+            )
         }
     }
 }

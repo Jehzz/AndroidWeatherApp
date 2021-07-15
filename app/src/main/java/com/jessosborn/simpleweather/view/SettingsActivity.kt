@@ -43,11 +43,13 @@ class SettingsActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.select_dialog_multichoice)
             apply {
                 binding.spinnerUnits.adapter = adapter
-                binding.spinnerUnits.setSelection(adapter.getPosition(
-                    runBlocking {
-                        DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_UNITS)
-                    }
-                ))
+                binding.spinnerUnits.setSelection(
+                    adapter.getPosition(
+                        runBlocking {
+                            DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_UNITS)
+                        }
+                    )
+                )
             }
         }
     }

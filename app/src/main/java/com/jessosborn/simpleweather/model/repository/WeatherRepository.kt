@@ -40,10 +40,12 @@ class WeatherRepository @Inject constructor(
                         ) {
                             when (response.code()) {
                                 200 -> _currentWeatherData.value = response.body()
-                                401 -> _errorMessage.value =
-                                    context.getString(R.string.error_api_key)
-                                404 -> _errorMessage.value =
-                                    context.getString(R.string.error_city_not_found)
+                                401 ->
+                                    _errorMessage.value =
+                                        context.getString(R.string.error_api_key)
+                                404 ->
+                                    _errorMessage.value =
+                                        context.getString(R.string.error_city_not_found)
                                 else -> _errorMessage.value = response.message()
                             }
                         }
@@ -62,10 +64,12 @@ class WeatherRepository @Inject constructor(
                         ) {
                             when (response.code()) {
                                 200 -> _forecastWeatherData.value = response.body()
-                                401 -> _errorMessage.value =
-                                    context.getString(R.string.error_api_key)
-                                404 -> _errorMessage.value =
-                                    context.getString(R.string.error_city_not_found)
+                                401 ->
+                                    _errorMessage.value =
+                                        context.getString(R.string.error_api_key)
+                                404 ->
+                                    _errorMessage.value =
+                                        context.getString(R.string.error_city_not_found)
                                 else -> _errorMessage.value = response.message()
                             }
                             _isNetworkLoading.value = false

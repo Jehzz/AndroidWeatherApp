@@ -14,7 +14,7 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class Network @Inject constructor(){
+class Network @Inject constructor() {
 
     fun initRetrofit(): WeatherEndpoint {
         val retrofit = Retrofit.Builder()

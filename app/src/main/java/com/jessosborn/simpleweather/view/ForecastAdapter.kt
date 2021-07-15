@@ -24,7 +24,8 @@ class ForecastAdapter(
         findExtremeTempIndices()
         return CustomViewHolder(
             WeatherItemLayoutBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false)
+                LayoutInflater.from(parent.context), parent, false
+            )
         )
     }
 
@@ -66,7 +67,6 @@ class ForecastAdapter(
                 tvTime.setTextColor(getColor(context, R.color.orange))
                 ivWeatherIcon.setColorFilter(getColor(context, R.color.orange))
             }
-
         }
     }
 
