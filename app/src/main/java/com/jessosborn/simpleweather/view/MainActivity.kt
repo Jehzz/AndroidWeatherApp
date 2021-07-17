@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun refresh() {
         CoroutineScope(Dispatchers.Main).launch {
+            preferredUnits = DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_UNITS)
             DataStoreUtil.getString(applicationContext, DataStoreUtil.USER_ZIP)?.let {
                 viewModel.fetchWeatherFromApi(
                     zip = it,
