@@ -1,8 +1,9 @@
 package com.jessosborn.simpleweather.model.network
 
-import com.jessosborn.simpleweather.App.Companion.context
+import android.content.Context
 import com.jessosborn.simpleweather.model.network.WeatherEndpoint.Companion.baseApiUrl
 import com.jessosborn.simpleweather.utils.isOnline
+import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
@@ -14,7 +15,7 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class Network @Inject constructor() {
+class Network @Inject constructor(@ApplicationContext private val context: Context) {
 
     fun initRetrofit(): WeatherEndpoint {
         val retrofit = Retrofit.Builder()
@@ -45,7 +46,7 @@ class Network @Inject constructor() {
     private fun offlineInterceptor(): Interceptor {
         return Interceptor { chain ->
             var request = chain.request()
-            if (!isOnline()) {
+            if (!isOnline(context)) {
                 val cacheControl = CacheControl.Builder()
                     .maxStale(1, TimeUnit.DAYS)
                     .build()
