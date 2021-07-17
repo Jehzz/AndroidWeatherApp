@@ -99,9 +99,9 @@ class MainActivity : AppCompatActivity() {
                 { forecastWeatherData ->
                     forecastWeatherData?.let { it ->
                         binding.todaysForecast.rvTodaysWeather.adapter =
-                            ForecastAdapter(it.list.take(8))
+                            ForecastAdapter(this@MainActivity, it.list.take(8))
                         binding.tomorrowForecast.rvTomorrowsWeather.adapter =
-                            ForecastAdapter(it.list.drop(8).take(8))
+                            ForecastAdapter(this@MainActivity, it.list.drop(8).take(8))
                     }
                 }
             )

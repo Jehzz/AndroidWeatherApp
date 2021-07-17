@@ -3,9 +3,8 @@ package com.jessosborn.simpleweather.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.jessosborn.simpleweather.App.Companion.context
 
-fun isOnline(): Boolean {
+fun isOnline(context: Context): Boolean {
     val connectivityManager =
         context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

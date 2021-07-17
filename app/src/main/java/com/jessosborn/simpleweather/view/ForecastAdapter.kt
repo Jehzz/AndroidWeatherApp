@@ -1,11 +1,11 @@
 package com.jessosborn.simpleweather.view
 
+import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
-import com.jessosborn.simpleweather.App.Companion.context
 import com.jessosborn.simpleweather.R
 import com.jessosborn.simpleweather.databinding.WeatherItemLayoutBinding
 import com.jessosborn.simpleweather.model.repository.WeatherList
@@ -15,6 +15,7 @@ import java.util.Locale
 import kotlin.math.roundToInt
 
 class ForecastAdapter(
+    private val context: Context,
     private val dataSet: List<WeatherList>,
 ) : RecyclerView.Adapter<ForecastAdapter.CustomViewHolder>() {
 
